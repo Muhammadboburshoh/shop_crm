@@ -1,6 +1,6 @@
-body{
+body {
   margin: 0;
-  font-family: "Arial", serif;
+  font-family: 'Arial', serif;
   padding: 0;
 }
 
@@ -41,7 +41,7 @@ body{
 .profile__name {
   font-weight: 600;
   text-transform: capitalize;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 
 .profile__btn {
@@ -76,7 +76,7 @@ body{
   background: none;
   cursor: pointer;
   border-radius: 15px;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 
 .logout-img {
@@ -116,7 +116,7 @@ body{
 
 .first_icon {
   opacity: 0.8;
-   margin-top: -5px;
+  margin-top: -5px;
 }
 
 .sidebar_link {
@@ -132,7 +132,7 @@ body{
   text-decoration: none;
   background-color: #fff;
   border-radius: 60px;
-  transition: color .2s ease,background-color .2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -140,17 +140,17 @@ body{
 }
 
 .sidebar_link-active {
-  background-color: rgba(81,89,119,.1);
+  background-color: rgba(81, 89, 119, 0.1);
   color: #515977;
 }
 
 .sidebar_link:hover {
-  background-color: rgba(81,89,119,.1);
+  background-color: rgba(81, 89, 119, 0.1);
   color: #515977;
 }
 
 .sidebar_link--active {
-  background-color: rgba(81,89,119,.1);
+  background-color: rgba(81, 89, 119, 0.1);
   color: #515977;
 }
 
@@ -170,7 +170,7 @@ body{
 }
 
 .category__create-input {
-  font-family: "Cairo","Arial",sans-serif;
+  font-family: 'Cairo', 'Arial', sans-serif;
   width: 150px;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -185,13 +185,13 @@ body{
 .category__create-btn {
   padding: 10px 20px;
   color: #fff;
-  background-color: #4BB543;
+  background-color: #4bb543;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 }
 
-.category__create-btn:hover{
+.category__create-btn:hover {
   background-color: #2c8f24;
 }
 
@@ -205,6 +205,7 @@ body{
 
 .category__create-form {
   margin-bottom: 20px;
+  padding: 0 70px;
 }
 
 .categories__table {
@@ -238,7 +239,7 @@ body{
 }
 
 .categories__delete-btn:hover {
-  background-color: #D11A2A;
+  background-color: #d11a2a;
 }
 
 .categories__edit-btn {
@@ -284,7 +285,7 @@ body{
   margin-bottom: 20px;
 }
 
-.input-wrapper input {
+.input-wrapper input, .input-wrapper textarea {
   width: 500px;
 }
 
@@ -354,8 +355,8 @@ body{
   margin-right: 10px;
   padding: 10px;
   background-color: #fff;
-  font-family: "Cairo","Arial",sans-serif;
-  width: 400px!important;
+  font-family: 'Cairo', 'Arial', sans-serif;
+  width: 400px !important;
   border: 1px solid #ddd;
   border-radius: 3px;
 }
@@ -363,7 +364,7 @@ body{
 .school__create-btn {
   padding: 10px 20px;
   color: #fff;
-  background-color: #4BB543;
+  background-color: #4bb543;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -373,7 +374,7 @@ body{
   margin-left: auto;
 }
 
-.school__create-btn:hover{
+.school__create-btn:hover {
   background-color: #2c8f24;
 }
 
@@ -408,7 +409,7 @@ body{
 .upload-input {
   text-align: center;
   cursor: pointer;
-  font-family: "Cairo","Arial",sans-serif;
+  font-family: 'Cairo', 'Arial', sans-serif;
   width: 350px;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -423,4 +424,8 @@ body{
   display: block;
   margin-right: auto;
   margin-left: auto;
+}
+
+.textarea-style {
+  height: 120px;
 }

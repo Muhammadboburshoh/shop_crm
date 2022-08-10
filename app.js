@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(authRoutes);
 app.use(adminRoutes);
 app.get("/", (req, res) => {
-  res.render('shop/product-list', {pageTitle: "home", path: "/"});
+  res.render('shop/product-list', {pageTitle: "home", path: "/", username: "username"});
 });
 // app.get('/500', errorController.get500);
 
