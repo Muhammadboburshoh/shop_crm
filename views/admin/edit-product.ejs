@@ -11,15 +11,15 @@
         <%- include('../includes/header-right.ejs') %>
 
         <section class="main-content-wrapper">
-          <form class="category__create-form" action="/parent" method="POST" enctype="application/x-www-form-urlencoded">
-            <h3 class="parrent-hading">Yangi ota ona qo'shing!</h3>
+          <form class="category__create-form" action="/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="application/x-www-form-urlencoded">
+            <h3 class="parrent-hading">Yangi product qo'shing!</h3>
             <div class="input-wrapper">
-              <label for="create-category">Ota yoki onani ism familiyasini yozing: </label>
-              <input name="parent" class="category__create-input" type="text" placeholder="Ism familiya" required />
+              <label for="create-category">Product nomi: </label>
+              <input name="parent" class="category__create-input" type="text" placeholder="name" required />
             </div>
             <div class="input-wrapper">
-              <label for="create-category">Ota yoki onani telefon raqamini kiriting: </label>
-              <input name="phone" class="category__create-input" type="number" placeholder="998 bilan yozing" required />
+              <label for="create-category">Shrix code raqamlarini kiriting: </label>
+              <input name="phone" class="category__create-input" type="number" placeholder="code" required />
             </div>
             <div class="input-wrapper">
               <label>Ota ona uchun password yarating: </label>

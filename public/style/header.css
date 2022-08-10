@@ -139,6 +139,11 @@ body{
   font-family: 'Montserrat', sans-serif;
 }
 
+.sidebar_link-active {
+  background-color: rgba(81,89,119,.1);
+  color: #515977;
+}
+
 .sidebar_link:hover {
   background-color: rgba(81,89,119,.1);
   color: #515977;

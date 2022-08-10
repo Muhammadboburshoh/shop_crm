@@ -7,19 +7,19 @@
     <nav class="sidebar_nav">
       <ul class="sidebar_list">
         <li class="sidebar_item">
-          <a class="sidebar_link" href="/">
+          <a class="sidebar_link <%= path === '/' ? 'sidebar_link-active' : '' %>" href="/">
             <span class="sidebar_icon">
-              <img class="first_icon" src="/images/classes.png" width="=30" height="30" alt="" />
+              <img class="first_icon" src="/images/shopping.png" width="=30" height="30" alt="" />
             </span>
-            Sinflar
+            Shopping
           </a>
         </li>
         <li class="sidebar_item">
-          <a class="sidebar_link" href="/c/parents">
+          <a class="sidebar_link <%= path === 'admin/add-product' ? 'sidebar_link-active' : '' %>" href="/add-product">
             <span class="sidebar_icon">
-              <img class="first_icon" src="/images/plas.png" width="=20" height="20" alt="" />
+              <img class="first_icon" src="/images/plas.png" width="=25" height="25" alt="" />
             </span>
-            Ota ona qo'shish
+            Add Products
           </a>
         </li>
       </ul>

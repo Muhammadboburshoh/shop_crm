@@ -9,6 +9,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -16,8 +17,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(authRoutes);
-app.use((req, res) => {
-  res.render('admin/edit-product', {pageTitle: "home"});
+app.use(adminRoutes);
+app.get("/", (req, res) => {
+  res.render('shop/product-list', {pageTitle: "home", path: "/"});
 });
 // app.get('/500', errorController.get500);
 
