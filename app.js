@@ -16,6 +16,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(authRoutes);
+app.use((req, res) => {
+  res.render('admin/edit-product', {pageTitle: "home"});
+});
 // app.get('/500', errorController.get500);
 
 // app.use(errorController.get404);
