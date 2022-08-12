@@ -1,14 +1,15 @@
 const Product = require('../models/product');
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 3;
 
 exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
+  const search = req.query.search || null;
   const username = req.cookies.__auth.user.login;
 
   try {
-    const { product_count } = await Product.count();
-    const products = await Product.fetchAll(page, ITEMS_PER_PAGE);
+    const { product_count } = await Product.count(search);
+    const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
 
     res.render('shop/product-list', {
       pageTitle: 'Home',
@@ -20,7 +21,8 @@ exports.getProducts = async (req, res, next) => {
       hasPerviousPage: page > 1,
       nextPage: page + 1,
       perviousPage: page - 1,
-      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE)
+      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE),
+      search: search
     });
   } catch (err) {
     const error = new Error(err);

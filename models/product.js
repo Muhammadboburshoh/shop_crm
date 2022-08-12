@@ -24,32 +24,25 @@ module.exports = class Product {
     );
   }
 
-  static fetchAll(page, limit) {
-    const allProductsSql = `
-      select
-        p.id,
-        p.name,
-        p.barcode,
-        p.description,
-        max(pi.original_price) as original_price,
-        max(pi.markup_price) as markup_price,
-        sum(pi.count) as count
-      from
-        products as p
-        join product_items as pi on pi.product_id = p.id
-      group by
-        p.id,
-        p.name,
-        p.barcode,
-        p.description
-      order by
-        p.id
-      offset ($1 - 1) * $2 limit $2
-    `;
-    return rows(allProductsSql, page, limit);
+  static fetchAll(search, page, limit) {
+    if(!search) {
+      const allProductsSql = `
+        select * from all_products($1, $2)
+      `;
+      return rows(allProductsSql, page, limit);
+    } else {
+      const allProductsSql = `
+        select * from search_products($1, $2, $3)
+      `;
+      return rows(allProductsSql, search, page, limit);
+    }
   }
 
-  static count() {
-    return row(`select count(*) as product_count from products`);
+  static count(search) {
+    if(!search) {
+      return row(`select count(*) as product_count from products`);
+    } else {
+      return row(`select * from search_products_count($1) as product_count`, search)
+    }
   }
 };

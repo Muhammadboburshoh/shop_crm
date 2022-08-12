@@ -1,4 +1,6 @@
-<section class="product-search-box">
-  <input class="product-search-input" type="text" placeholder="name or barcode">
-  <button class="product-search-btn" type="button">Search</button>
-</section>
+<form action="<%= path %>" method="GET" enctype="application/x-www-form-urlencoded">
+  <section class="product-search-box">
+    <input name="search" class="product-search-input" type="text" placeholder="name or barcode">
+    <button class="product-search-btn" type="submit">Search</button>
+  </section>
+</form>
