@@ -1,0 +1,62 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/style/header.css">
+  </head>
+
+  <body>
+    <div class="main-wrapper">
+      <%- include('../includes/navbar.ejs') %>
+  
+      <div class="content-wrapper">
+        <%- include('../includes/header-right.ejs') %>
+
+        <section class="main-content-wrapper">
+          
+          <% if (products.length > 0) { %>
+              <table class="categories__table">
+                <thead>
+                  <tr class="categories__thead-tr">
+                    <th class="categories__thead-th">Name</th>
+                    <th class="categories__thead-th">Barcode</th>
+                    <th class="categories__thead-th">Price</th>
+                    <th class="categories__thead-th">Count</th>
+                    <th class="categories__thead-th">Tahrirlash</th>
+                    <th class="categories__thead-th">O'chirish</th>
+                  </tr>
+                </thead>
+                <tbody class="classes">
+                  <% for (let product of products) { %>
+                    <tr class="categories__tbody-tr">
+                      <th class="categories__tbody-td">
+                        <%= product.name %>
+                      </th>
+                      <th class="categories__tbody-td">
+                        <%= product.barcode %>
+                      </th>
+                      <th class="categories__tbody-td">
+                        <%= product.markup_price %> so'm
+                      </th>
+                      <th class="categories__tbody-td">
+                        <%= product.count %>
+                      </th>
+                      <th class="categories__tbody-td">
+                        <button data-id="<%= product.id %>" class="categories__edit-btn" data-update="0">tahrirlash</button>
+                      </th>
+                      <th class="categories__tbody-td">
+                        <button data-id="<%= product.id %> " class="categories__delete-btn">o'chirish</button>
+                      </th>
+                    </tr>
+                    <% } %>
+                </tbody>
+              </table>
+
+              <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, hasNextPage: hasNextPage, perviousPage: perviousPage, hasPerviousPage: hasPerviousPage, lastPage: lastPage}) %>
+
+          <% } else { %>
+            <h1>No Products Found!</h1>
+          <% } %>
+
+        </section>
+      </div>
+    </div>
+
+  <%- include('../includes/end.ejs') %>

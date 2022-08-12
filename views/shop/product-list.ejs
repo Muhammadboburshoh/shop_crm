@@ -19,8 +19,7 @@
                     <th class="categories__thead-th">Barcode</th>
                     <th class="categories__thead-th">Price</th>
                     <th class="categories__thead-th">Count</th>
-                    <th class="categories__thead-th">Tahrirlash</th>
-                    <th class="categories__thead-th">O'chirish</th>
+                    <th class="categories__thead-th">Savatchaga qo'shish</th>
                   </tr>
                 </thead>
                 <tbody class="classes">
@@ -39,10 +38,9 @@
                         <%= product.count %>
                       </th>
                       <th class="categories__tbody-td">
-                        <button data-id="<%= product.id %>" class="categories__edit-btn" data-update="0">tahrirlash</button>
-                      </th>
-                      <th class="categories__tbody-td">
-                        <button data-id="<%= product.id %> " class="categories__delete-btn">o'chirish</button>
+                        <!-- <label for="create-category">soni </label> -->
+                        <input name="name" class="category__create-input" type="text" placeholder="soni" required />
+                        <button data-id="<%= product.id %>" class="category__create-btn" data-update="0"> <b style="font-size: 20px; padding: -5px;">+</b></button>
                       </th>
                     </tr>
                     <% } %>
@@ -58,7 +56,5 @@
         </section>
       </div>
     </div>
-  
-    <!-- <script src="/javascripts/config.js"></script> -->
-    <!-- <script src="/javascripts/parrents.js"></script> -->
+
   <%- include('../includes/end.ejs') %>
