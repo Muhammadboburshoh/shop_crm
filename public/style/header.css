@@ -429,3 +429,22 @@ body {
 .textarea-style {
   height: 120px;
 }
+
+.massage-box {
+  position: relative;
+  display: block;
+}
+
+.creating-product {
+  background-color: rgba(0, 48, 0, 0.693);
+  padding: 10px 40px;
+  position: absolute;
+  right: 45%;
+  top: -23px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.d-none {
+  display: none;
+}

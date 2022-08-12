@@ -9,6 +9,14 @@
       <div class="content-wrapper">
         <%- include('../includes/header-right.ejs') %>
 
+        <% if (prodCreateing) {%>
+          <div class="massage-box">
+            <p class="creating-product">
+              Product yaratildi!
+            </p>
+          </div>
+        <% } %>
+
         <section class="main-content-wrapper">
           <form class="category__create-form" action="/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="application/x-www-form-urlencoded">
             <h3 class="parrent-hading">Yangi product qo'shing!</h3>
@@ -42,6 +50,5 @@
       </div>
     </div>
   
-    <!-- <script src="/javascripts/config.js"></script> -->
-    <!-- <script src="/javascripts/parrents.js"></script> -->
+    <script src="/js/admin.js"></script>
   <%- include('../includes/end.ejs') %>

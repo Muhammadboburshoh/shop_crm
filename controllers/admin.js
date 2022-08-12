@@ -7,7 +7,7 @@ exports.getAddProduct = (req, res, next) => {
     path: 'admin/add-product',
     username: username,
     editing: false,
-    prodCreateing: true
+    prodCreateing: false
   });
 };
 
