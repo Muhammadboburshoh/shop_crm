@@ -49,6 +49,8 @@
                 </tbody>
               </table>
 
+              <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, hasNextPage: hasNextPage, perviousPage: perviousPage, hasPerviousPage: hasPerviousPage, lastPage: lastPage}) %>
+
           <% } else { %>
             <h1>No Products Found!</h1>
           <% } %>

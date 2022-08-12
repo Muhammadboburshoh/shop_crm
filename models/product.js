@@ -24,7 +24,7 @@ module.exports = class Product {
     );
   }
 
-  static fetchAll() {
+  static fetchAll(page, limit) {
     const allProductsSql = `
       select
         p.id,
@@ -40,8 +40,15 @@ module.exports = class Product {
         p.id,
         p.name,
         p.barcode,
-        p.description;
+        p.description
+      order by
+        p.id desc
+      offset ($1 - 1) * $2 limit $2
     `;
-    return rows(allProductsSql);
+    return rows(allProductsSql, page, limit);
+  }
+
+  static count() {
+    return row(`select count(*) as product_count from products`);
   }
 };
