@@ -31,6 +31,7 @@ module.exports = class Product {
         p.name,
         p.barcode,
         p.description,
+        max(pi.original_price) as original_price,
         max(pi.markup_price) as markup_price,
         sum(pi.count) as count
       from
@@ -42,7 +43,7 @@ module.exports = class Product {
         p.barcode,
         p.description
       order by
-        p.id desc
+        p.id
       offset ($1 - 1) * $2 limit $2
     `;
     return rows(allProductsSql, page, limit);

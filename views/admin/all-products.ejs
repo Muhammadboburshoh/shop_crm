@@ -11,13 +11,16 @@
 
         <section class="main-content-wrapper">
           
+        <%- include('../includes/search.ejs') %>
+
           <% if (products.length > 0) { %>
               <table class="categories__table">
                 <thead>
                   <tr class="categories__thead-tr">
                     <th class="categories__thead-th">Name</th>
                     <th class="categories__thead-th">Barcode</th>
-                    <th class="categories__thead-th">Price</th>
+                    <th class="categories__thead-th">Orginal Price</th>
+                    <th class="categories__thead-th">Makeup Price</th>
                     <th class="categories__thead-th">Count</th>
                     <th class="categories__thead-th">Tahrirlash</th>
                     <th class="categories__thead-th">O'chirish</th>
@@ -31,6 +34,9 @@
                       </th>
                       <th class="categories__tbody-td">
                         <%= product.barcode %>
+                      </th>
+                      <th class="categories__tbody-td">
+                        <%= product.original_price %> so'm
                       </th>
                       <th class="categories__tbody-td">
                         <%= product.markup_price %> so'm

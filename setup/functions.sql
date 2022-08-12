@@ -32,6 +32,44 @@ values
 end;
 $$;
 
+-- All Products function
+drop function search_products;
+create or replace function search_products(_search varchar, _page int, _limit int) returns table (
+  id int,
+  name text,
+  barcode varchar,
+  description varchar,
+  original_price varchar,
+  markup_price varchar,
+  count int
+) language plpgsql as $$
+begin
+  return
+    query select
+      p.id as id,
+      p.name as name,
+      p.barcode as barcode,
+      p.description as description,
+      max(pi.original_price) as original_price,
+      max(pi.markup_price) as markup_price,
+      sum(pi.count) as count
+    from
+      products as p
+    join
+      product_items as pi on pi.product_id = p.id
+    where
+      p.name ilike '%' || _search ||'%' or p.barcode ilike '%' || _search ||'%'
+    group by
+      p.id,
+      p.name,
+      p.barcode,
+      p.description
+    order by
+      p.id
+    offset (_page - 1) * _limit limit _page;
+end;
+$$;
+
 
 
 --create function product_add_p_id() returns trigger language plpgsql as $$ begin
