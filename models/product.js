@@ -24,6 +24,20 @@ module.exports = class Product {
     );
   }
 
+  static fetchAllShopping(search, page, limit) {
+    if(!search) {
+      const allProductsSql = `
+        select * from products_for_sale($1, $2)
+      `;
+      return rows(allProductsSql, page, limit);
+    } else {
+      const allProductsSql = `
+        select * from searching_products_for_sale($1, $2, $3)
+      `;
+      return rows(allProductsSql, search, page, limit);
+    }
+  }
+
   static fetchAll(search, page, limit) {
     if(!search) {
       const allProductsSql = `
@@ -32,7 +46,7 @@ module.exports = class Product {
       return rows(allProductsSql, page, limit);
     } else {
       const allProductsSql = `
-        select * from search_products($1, $2, $3)
+        select * from searching_products($1, $2, $3)
       `;
       return rows(allProductsSql, search, page, limit);
     }

@@ -503,3 +503,29 @@ body {
 .product-search-btn:hover {
   background-color: #ce6c56;
 }
+
+/* Table style */
+/* div {
+  outline: 1px solid black;
+} */
+/* .header {
+  display: flex;
+  width: max-content;
+}
+.header-item {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+}
+.columns {
+  display: flex;
+  text-align: center;
+  width: max-content;
+}
+.columns-items {
+  width: 100px;
+  height: 100px;
+}
+.columns-items-small {
+  height: 50px;
+} */

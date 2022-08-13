@@ -1,5 +1,6 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/style/header.css">
+    <link rel="stylesheet" href="/style/products-table.css">
   </head>
 
   <body>
@@ -14,46 +15,69 @@
         <%- include('../includes/search.ejs') %>
 
           <% if (products.length > 0) { %>
-              <table class="categories__table">
-                <thead>
-                  <tr class="categories__thead-tr">
-                    <th class="categories__thead-th">Name</th>
-                    <th class="categories__thead-th">Barcode</th>
-                    <th class="categories__thead-th">Orginal Price</th>
-                    <th class="categories__thead-th">Makeup Price</th>
-                    <th class="categories__thead-th">Count</th>
-                    <th class="categories__thead-th">Tahrirlash</th>
-                    <th class="categories__thead-th">O'chirish</th>
-                  </tr>
-                </thead>
-                <tbody class="classes">
-                  <% for (let product of products) { %>
-                    <tr class="categories__tbody-tr">
-                      <th class="categories__tbody-td">
-                        <%= product.name %>
-                      </th>
-                      <th class="categories__tbody-td">
-                        <%= product.barcode %>
-                      </th>
-                      <th class="categories__tbody-td">
-                        <%= product.original_price %> so'm
-                      </th>
-                      <th class="categories__tbody-td">
-                        <%= product.markup_price %> so'm
-                      </th>
-                      <th class="categories__tbody-td">
-                        <%= product.count %>
-                      </th>
-                      <th class="categories__tbody-td">
-                        <button data-id="<%= product.id %>" class="categories__edit-btn" data-update="0">tahrirlash</button>
-                      </th>
-                      <th class="categories__tbody-td">
-                        <button data-id="<%= product.id %> " class="categories__delete-btn">o'chirish</button>
-                      </th>
-                    </tr>
-                    <% } %>
-                </tbody>
-              </table>
+
+            <div class="products__list">
+              <div class="products__list-header">
+                <div class="products__list-header-item p-item-first">Name</div>
+                <div class="products__list-header-item p-item-second">Barcode</div>
+                <div class="products__list-header-item p-item-third">Orginal Price</div>
+                <div class="products__list-header-item p-item-fourth">Makeup Price</div>
+                <div class="products__list-header-item p-item-fifth">Count</div>
+                <div class="products__list-header-item p-item-sixth">Tahrirlash</div>
+                <div class="products__list-header-item p-item-seventh">O'chirish</div>
+              </div>
+              <div class="products__list-main">
+
+                <% for (let product of products) { %>
+                  <div class="products_list-columns">
+                    <div class="products_list-columns-item p-item-first"><%= product.name %></div>
+                    <div class="products_list-columns-item p-item-second"><%= product.barcode %></div>
+                    <div class="products_list-columns-item-therd">
+                      <% for (let i=0; i < product.original_price.length; i++ ) { %>
+                        <div class="products_list-columns-item-samll">
+                          <div class="products_list-columns-small p-item-third"><%= product.original_price[i] %></div>
+                          <div class="products_list-columns-small p-item-fourth"><%= product.markup_price[i] %></div>
+                          <div class="products_list-columns-small p-item-fifth"><%= product.count[i] %></div>
+                          <div class="products_list-columns-small p-item-sixth">
+                            <button data-id="<%= product.id %>" class="categories__edit-btn" data-update="0">tahrirlash</button>
+                          </div>
+                        </div>
+                      <% } %>
+                    </div>
+                    <div class="products_list-columns-item p-item-seventh"><button data-id="<%= product.id %> " class="categories__delete-btn">o'chirish</button></div>
+                  </div>
+                <% } %>
+
+                <div class="products_list-columns">
+                  <div class="products_list-columns-item p-item-first">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                  <div class="products_list-columns-item p-item-second">123</div>
+                  <div class="products_list-columns-item-therd">
+                    <div class="products_list-columns-item-samll">
+                      <div class="products_list-columns-small p-item-third">1</div>
+                      <div class="products_list-columns-small p-item-third">1</div>
+                      <div class="products_list-columns-small p-item-fifth">1</div>
+                      <div class="products_list-columns-small p-item-sixth">1</div>
+                      <div class="products_list-columns-small p-item-seventh">1</div>
+                    </div>
+                    <div class="products_list-columns-item-samll">
+                      <div class="products_list-columns-small p-item-third">1</div>
+                      <div class="products_list-columns-small p-item-third">1</div>
+                      <div class="products_list-columns-small p-item-fifth">1</div>
+                      <div class="products_list-columns-small p-item-sixth">1</div>
+                      <div class="products_list-columns-small p-item-seventh">1</div>
+                    </div>
+                    <div class="products_list-columns-item-samll">
+                      <div class="products_list-columns-small p-item-third">1</div>
+                      <div class="products_list-columns-small p-item-third">1</div>
+                      <div class="products_list-columns-small p-item-fifth">1</div>
+                      <div class="products_list-columns-small p-item-sixth">1</div>
+                      <div class="products_list-columns-small p-item-seventh">1</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
               <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, hasNextPage: hasNextPage, perviousPage: perviousPage, hasPerviousPage: hasPerviousPage, lastPage: lastPage}) %>
 

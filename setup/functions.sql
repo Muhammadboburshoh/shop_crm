@@ -29,10 +29,13 @@ begin
     end if;
 end;
 $$;
+------------------------
 
+
+------------------------
 -- search Products function
-drop function search_products;
-create or replace function search_products(_search text, _page int, _limit int) returns table(
+drop function searching_products_for_sale;
+create or replace function searching_products_for_sale(_search text, _page int, _limit int) returns table(
   id int,
   name text,
   barcode varchar,
@@ -69,8 +72,8 @@ $$;
 
 
 -- all Products function
-drop function all_products;
-create or replace function all_products(_page int, _limit int) returns table(
+drop function products_for_sale;
+create or replace function products_for_sale(_page int, _limit int) returns table(
   id int,
   name text,
   barcode varchar,
@@ -103,6 +106,7 @@ begin
 end;
 $$;
 
+--searching product count
 drop function search_products_count;
 create or replace function search_products_count(_search text) returns integer language plpgsql as $$
 begin
@@ -113,5 +117,76 @@ begin
       products
     where
       name ilike '%' || _search || '%' or barcode ilike '%' || _search || '%');
+end;
+$$;
+
+
+drop function searching_products;
+create or replace function searching_products(_search text, _page int, _limit int) returns table(
+  id int,
+  name text,
+  barcode varchar,
+  description text,
+  count int [],
+  original_price varchar [],
+  markup_price varchar []
+) language plpgsql as $$
+begin
+  return query
+    select
+      p.id as id,
+      p.name as name,
+      p.barcode as barcode,
+      p.description as description,
+      array_agg(pi.count) as count,
+      array_agg(pi.original_price) as original_price,
+      array_agg(pi.markup_price) as markup_price
+    from
+      products as p
+    join
+      product_items as pi on pi.product_id = p.id
+    where
+      p.name ilike '%' || _search || '%' or p.barcode ilike '%' || _search || '%'
+    group by
+      p.id,
+      p.name,
+      p.description
+    order by
+      p.id
+    offset (_page - 1) * _limit limit _limit;
+end;
+$$;
+
+drop function all_products;
+create or replace function all_products(_page int, _limit int) returns table(
+  id int,
+  name text,
+  barcode varchar,
+  description text,
+  count int [],
+  original_price varchar [],
+  markup_price varchar []
+) language plpgsql as $$
+begin
+  return query
+    select
+      p.id as id,
+      p.name as name,
+      p.barcode as barcode,
+      p.description as description,
+      array_agg(pi.count) as count,
+      array_agg(pi.original_price) as original_price,
+      array_agg(pi.markup_price) as markup_price
+    from
+      products as p
+    join
+      product_items as pi on pi.product_id = p.id
+    group by
+      p.id,
+      p.name,
+      p.description
+    order by
+      p.id
+    offset (_page - 1) * _limit limit _limit;
 end;
 $$;

@@ -4,12 +4,13 @@ const ITEMS_PER_PAGE = 3;
 
 exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
-  const search = req.query.search || null;
+  let search = req.query.search || null;
   const username = req.cookies.__auth.user.login;
+  search = search ? search.trim(): search;
 
   try {
     const { product_count } = await Product.count(search);
-    const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
+    const products = await Product.fetchAllShopping(search, page, ITEMS_PER_PAGE);
 
     res.render('shop/product-list', {
       pageTitle: 'Home',

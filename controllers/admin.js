@@ -1,12 +1,12 @@
 const Product = require('../models/product');
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 5;
 
 exports.getAddProduct = (req, res, next) => {
   const username = req.cookies.__auth.user.login;
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
-    path: 'admin/add-product',
+    path: '/add-product',
     username: username,
     editing: false,
     prodCreateing: false
@@ -31,7 +31,7 @@ exports.postAddProduct = async (req, res, next) => {
 
     res.render('admin/edit-product', {
       pageTitle: 'Add Product',
-      path: 'admin/add-product',
+      path: '/add-product',
       username: username,
       editing: false,
       prodCreateing: true
@@ -46,15 +46,17 @@ exports.postAddProduct = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
+  let search = req.query.search || null;
   const username = req.cookies.__auth.user.login;
+  search = search ? search.trim(): search;
 
   try {
-    const { product_count } = await Product.count();
-    const products = await Product.fetchAll(page, ITEMS_PER_PAGE);
+    const { product_count } = await Product.count(search);
+    const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
 
     res.render('admin/all-products', {
       pageTitle: 'All Products',
-      path: 'admin/products',
+      path: '/products',
       username: username,
       products: products,
       currentPage: page,
@@ -62,7 +64,8 @@ exports.getProducts = async (req, res, next) => {
       hasPerviousPage: page > 1,
       nextPage: page + 1,
       perviousPage: page - 1,
-      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE)
+      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE),
+      search: search
     });
   } catch (err) {
     const error = new Error(err);
