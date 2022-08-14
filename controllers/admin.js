@@ -20,6 +20,8 @@ exports.postAddProduct = async (req, res, next) => {
 
   try {
     const product = new Product(
+      null,
+      null,
       name,
       barcode,
       count,
@@ -37,7 +39,6 @@ exports.postAddProduct = async (req, res, next) => {
       prodCreateing: true
     });
   } catch (err) {
-    console.log(err);
     const error = new Error(err);
     error.httpStatusCode = 500;
     return next(error);
@@ -105,5 +106,38 @@ exports.getEditProduct = async (req, res, next) => {
 };
 
 exports.postEditProduct = async (req, res, next) => {
-  
-}
+  const username = req.cookies.__auth.user.login;
+  const {
+    name,
+    barcode,
+    count,
+    original_price,
+    markup_price,
+    prodId,
+    prodItemId
+  } = req.body;
+  const description = req.body.description ? req.body.description : null;
+
+  console.log(prodId, prodItemId);
+  console.log(name, barcode, count, original_price, markup_price, description);
+
+  try {
+    const product = new Product(
+      prodId,
+      prodItemId,
+      name,
+      barcode,
+      count,
+      original_price,
+      markup_price,
+      description
+    );
+    const result = await product.save();
+
+    res.redirect('/products');
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};

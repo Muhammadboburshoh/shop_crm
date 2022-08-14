@@ -44,6 +44,10 @@
               <label for="create-category">Mahsulot haqida: </label>
               <textarea name="description" class="category__create-input textarea-style" placeholder="description"><% if (editing) { %><%= product.description %><% } %></textarea>
             </div>
+            <% if (editing) { %>
+              <input type="hidden" value="<%= product.id %>" name="prodId">
+              <input type="hidden" value="<%= product.pi_id %>" name="prodItemId">
+          <% } %>
             <button class="category__create-btn parent-btn" type="submit"><% if (editing) { %>Edit Product<% } else { %>Qo'shish<% } %></button>
           </form>
         </section>

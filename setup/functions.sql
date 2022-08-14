@@ -145,7 +145,7 @@ begin
       array_agg(pi.markup_price) as markup_price
     from
       products as p
-    join
+    left join
       product_items as pi on pi.product_id = p.id
     where
       p.name ilike '%' || _search || '%' or p.barcode ilike '%' || _search || '%'
@@ -183,7 +183,7 @@ begin
       array_agg(pi.markup_price) as markup_price
     from
       products as p
-    join
+    left join
       product_items as pi on pi.product_id = p.id
     group by
       p.id,
@@ -192,5 +192,48 @@ begin
     order by
       p.id
     offset (_page - 1) * _limit limit _limit;
+end;
+$$;
+
+
+
+drop function update_product;
+create function update_product(
+  _p_id int,
+  _pi_id int,
+  _name text,
+  _barcode text,
+  _count int,
+  _original_price text,
+  _markup_price text,
+  _des text
+) returns int language plpgsql as $$ declare p_last_id int;
+declare
+  _p_last_id int;
+  _pi_last_id int;
+begin
+
+    update products
+    set
+      name = _name,
+      barcode = _barcode,
+      description = _des
+    where
+      id = _p_id
+    returning id into _p_last_id;
+    update product_items
+    set
+      count = _count,
+      original_price = _original_price,
+      markup_price = _markup_price
+    where
+      id = _pi_id 
+    returning id into _pi_last_id;
+
+    if _p_last_id > 0 and _pi_last_id > 0 then
+      return 1;
+    else
+      return 0;
+    end if;
 end;
 $$;
