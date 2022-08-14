@@ -127,6 +127,7 @@ create or replace function searching_products(_search text, _page int, _limit in
   name text,
   barcode varchar,
   description text,
+  pi_id int [],
   count int [],
   original_price varchar [],
   markup_price varchar []
@@ -138,6 +139,7 @@ begin
       p.name as name,
       p.barcode as barcode,
       p.description as description,
+      array_agg(pi.id) as pi_id,
       array_agg(pi.count) as count,
       array_agg(pi.original_price) as original_price,
       array_agg(pi.markup_price) as markup_price
@@ -163,6 +165,7 @@ create or replace function all_products(_page int, _limit int) returns table(
   name text,
   barcode varchar,
   description text,
+  pi_id int [],
   count int [],
   original_price varchar [],
   markup_price varchar []
@@ -174,6 +177,7 @@ begin
       p.name as name,
       p.barcode as barcode,
       p.description as description,
+      array_agg(pi.id) as pi_id,
       array_agg(pi.count) as count,
       array_agg(pi.original_price) as original_price,
       array_agg(pi.markup_price) as markup_price

@@ -252,6 +252,7 @@ body {
   font-size: 15px;
   font-weight: bold;
   background-color: #20867e;
+  text-decoration: none;
 }
 
 .categories__edit-btn:hover {

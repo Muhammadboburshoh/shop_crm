@@ -25,7 +25,7 @@ module.exports = class Product {
   }
 
   static fetchAllShopping(search, page, limit) {
-    if(!search) {
+    if (!search) {
       const allProductsSql = `
         select * from products_for_sale($1, $2)
       `;
@@ -39,7 +39,7 @@ module.exports = class Product {
   }
 
   static fetchAll(search, page, limit) {
-    if(!search) {
+    if (!search) {
       const allProductsSql = `
         select * from all_products($1, $2)
       `;
@@ -53,10 +53,34 @@ module.exports = class Product {
   }
 
   static count(search) {
-    if(!search) {
+    if (!search) {
       return row(`select count(*) as product_count from products`);
     } else {
-      return row(`select * from search_products_count($1) as product_count`, search)
+      return row(
+        `select * from search_products_count($1) as product_count`,
+        search
+      );
     }
+  }
+
+  static findById(prodId, prodItemId) {
+    const findProductSql = `
+      select
+        p.id,
+        p.name,
+        p.barcode,
+        p.description,
+        pi.id as pi_id,
+        pi.count,
+        pi.original_price,
+        pi.markup_price
+      from
+        products as p
+      join
+        product_items as pi on pi.product_id = p.id
+      where
+        p.id = $1 and pi.id = $2
+    `;
+    return row(findProductSql, prodId, prodItemId);
   }
 };

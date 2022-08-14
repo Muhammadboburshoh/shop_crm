@@ -22,29 +22,29 @@
             <h3 class="parrent-hading">Yangi product qo'shing!</h3>
             <div class="input-wrapper">
               <label for="create-category">Product nomi: </label>
-              <input name="name" class="category__create-input" type="text" placeholder="name" required />
+              <input name="name" class="category__create-input" type="text" placeholder="name" required  value="<% if (editing) { %><%= product.name %><% } %>"/>
             </div>
             <div class="input-wrapper">
               <label for="create-category">Shrix code raqamlarini kiriting: </label>
-              <input name="barcode" class="category__create-input" type="number" placeholder="barcode" required />
+              <input name="barcode" class="category__create-input" type="number" placeholder="barcode" required value="<% if (editing) { %><%= product.barcode %><% } %>" />
             </div>
             <div class="input-wrapper">
               <label for="create-category">Product soni: </label>
-              <input name="count" class="category__create-input" type="number" placeholder="count" required />
+              <input name="count" class="category__create-input" type="number" placeholder="count" required value="<% if (editing) { %><%= product.count %><% } %>"/>
             </div>
             <div class="input-wrapper">
               <label for="create-category">Sotib olingan narx: </label>
-              <input name="original_price" class="category__create-input" type="number" placeholder="orginal price" required />
+              <input name="original_price" class="category__create-input" type="number" placeholder="orginal price" required value="<% if (editing) { %><%= product.original_price %><% } %>" />
             </div>
             <div class="input-wrapper">
               <label for="create-category">Sotuvdagi narxi: </label>
-              <input name="markup_price" class="category__create-input" type="number" placeholder="markup price" required />
+              <input name="markup_price" class="category__create-input" type="number" placeholder="markup price" required value="<% if (editing) { %><%= product.markup_price %><% } %>"/>
             </div>
             <div class="input-wrapper">
               <label for="create-category">Mahsulot haqida: </label>
-              <textarea name="description" class="category__create-input textarea-style" placeholder="description"></textarea>
+              <textarea name="description" class="category__create-input textarea-style" placeholder="description"><% if (editing) { %><%= product.description %><% } %></textarea>
             </div>
-            <button class="category__create-btn parent-btn" type="submit">Qo'shish</button>
+            <button class="category__create-btn parent-btn" type="submit"><% if (editing) { %>Edit Product<% } else { %>Qo'shish<% } %></button>
           </form>
         </section>
       </div>

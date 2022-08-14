@@ -48,7 +48,7 @@ exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
   let search = req.query.search || null;
   const username = req.cookies.__auth.user.login;
-  search = search ? search.trim(): search;
+  search = search ? search.trim() : search;
 
   try {
     const { product_count } = await Product.count(search);
@@ -73,3 +73,37 @@ exports.getProducts = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.getEditProduct = async (req, res, next) => {
+  const username = req.cookies.__auth.user.login;
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect('/products');
+  }
+
+  const prodId = req.query.p_id;
+  const prodItemId = req.query.pi_id;
+  try {
+    const product = await Product.findById(prodId, prodItemId);
+    if (!product) {
+      return res.redirect('/products');
+    }
+
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Products',
+      path: '/edit-product',
+      username: username,
+      editing: editMode,
+      product: product,
+      prodCreateing: false
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+exports.postEditProduct = async (req, res, next) => {
+  
+}
