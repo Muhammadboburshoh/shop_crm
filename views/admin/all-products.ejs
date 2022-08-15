@@ -39,7 +39,12 @@
                           <div class="products_list-columns-small p-item-fourth"><%= product.markup_price[i] %></div>
                           <div class="products_list-columns-small p-item-fifth"><%= product.count[i] %></div>
                           <div class="products_list-columns-small p-item-sixth">
-                            <a href="/edit-product?edit=true&p_id=<%= product.id %>&pi_id=<%= product.pi_id[i] %>" class="categories__edit-btn">tahrirlash</a>
+                            <a href="/edit-product?edit=true&p_id=<%= product.id %>&pi_id=" class="categories__edit-btn">
+                              <img src="/images/create-btn.png" alt="create button" width="20" height="20">
+                            </a>
+                            <a href="/edit-product?edit=true&p_id=<%= product.id %>&pi_id=<%= product.pi_id[i] %>" class="categories__edit-btn">
+                              <img src="/images/edit-button.png" alt="edit button" width="20" height="20">
+                            </a>
                           </div>
                         </div>
                       <% } %>

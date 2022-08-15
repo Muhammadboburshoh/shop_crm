@@ -22,7 +22,7 @@ module.exports = class Product {
   }
 
   save() {
-    if (this.prodId && this.prodItemId) {
+    if (this.prodId) {
       const productEditSql = `
         select update_product(
             $1, $2, $3, $4, $5, $6, $7, $8

@@ -226,6 +226,19 @@ body {
   font-weight: 400;
 }
 
+.categories__tbody-td:nth-child(1) {
+  max-width: 350px;
+}
+
+.categories__tbody-td input {
+  text-align: center;
+  width: 80px;
+}
+
+.product-min-count {
+  background-color: rgba(255, 0, 0, 0.314)!important;
+}
+
 .categories__delete-btn {
   text-align: center;
   padding: 8px;
@@ -251,12 +264,12 @@ body {
   cursor: pointer;
   font-size: 15px;
   font-weight: bold;
-  background-color: #20867e;
+  background-color: #20867d8b;
   text-decoration: none;
 }
 
 .categories__edit-btn:hover {
-  background-color: #0b635b;
+  background-color: #0b635cb6;
 }
 
 .categories__edit-succesiful {

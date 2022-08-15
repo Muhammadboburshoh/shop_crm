@@ -26,7 +26,7 @@
                 </thead>
                 <tbody class="classes">
                   <% for (let product of products) { %>
-                    <tr class="categories__tbody-tr">
+                    <tr class="categories__tbody-tr<% if(product.count < 10){%> product-min-count<%}%>">
                       <th class="categories__tbody-td">
                         <%= product.name %>
                       </th>
@@ -40,9 +40,10 @@
                         <%= product.count %>
                       </th>
                       <th class="categories__tbody-td">
-                        <!-- <label for="create-category">soni </label> -->
-                        <input name="name" class="category__create-input" type="text" placeholder="soni" required />
-                        <button data-id="<%= product.id %>" class="category__create-btn" data-update="0"> <b style="font-size: 20px; padding: -5px;">+</b></button>
+                        <input name="name" class="category__create-input" type="number" placeholder="soni" min="1" value="1" required />
+                        <button type="submit" data-id="<%= product.id %>" class="category__create-btn" data-update="0">
+                          <b style="font-size: 20px; padding: -5px;">+</b>
+                        </button>
                       </th>
                     </tr>
                     <% } %>

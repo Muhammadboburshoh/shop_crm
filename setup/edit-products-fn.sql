@@ -56,14 +56,27 @@ begin
     where
       id = _p_id
     returning id into _p_last_id;
-    update product_items
-    set
-      count = _count,
-      original_price = _original_price,
-      markup_price = _markup_price
-    where
-      id = _pi_id 
-    returning id into _pi_last_id;
+
+    if _pi_id = 0 then
+      insert into
+          product_items(product_id, count, original_price, markup_price)
+        values
+        (
+          _p_last_id,
+          _count,
+          _original_price,
+          _markup_price
+        ) returning id into _pi_last_id;
+    else
+      update product_items
+      set
+        count = _count,
+        original_price = _original_price,
+        markup_price = _markup_price
+      where
+        id = _pi_id 
+      returning id into _pi_last_id;
+    end if;
 
     if _p_last_id > 0 and _pi_last_id > 0 then
       return 1;

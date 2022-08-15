@@ -115,8 +115,8 @@ exports.postEditProduct = async (req, res, next) => {
     original_price,
     markup_price,
     prodId,
-    prodItemId
   } = req.body;
+  const prodItemId = req.body.prodItemId ? req.body.prodItemId : 0;
   const description = req.body.description ? req.body.description : null;
 
   try {
