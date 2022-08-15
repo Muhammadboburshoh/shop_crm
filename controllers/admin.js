@@ -105,6 +105,7 @@ exports.getEditProduct = async (req, res, next) => {
   }
 };
 
+// Try catch errorni ushlab qololmayapti.
 exports.postEditProduct = async (req, res, next) => {
   const username = req.cookies.__auth.user.login;
   const {

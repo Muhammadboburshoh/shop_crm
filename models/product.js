@@ -93,23 +93,16 @@ module.exports = class Product {
   }
 
   static findById(prodId, prodItemId) {
-    const findProductSql = `
-      select
-        p.id,
-        p.name,
-        p.barcode,
-        p.description,
-        pi.id as pi_id,
-        pi.count,
-        pi.original_price,
-        pi.markup_price
-      from
-        products as p
-      join
-        product_items as pi on pi.product_id = p.id
-      where
-        p.id = $1 and pi.id = $2
-    `;
-    return row(findProductSql, prodId, prodItemId);
+    if (prodItemId) {
+      const findProductSql = `
+        select * from find_product_details($1, $2)
+      `;
+      return row(findProductSql, prodId, prodItemId);
+    } else {
+      const findProductSql = `
+        select * from find_product($1)
+      `;
+      return row(findProductSql, prodId);
+    }
   }
 };
