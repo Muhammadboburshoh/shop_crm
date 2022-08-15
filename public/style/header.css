@@ -511,3 +511,14 @@ body {
 .categories__tbody-tr:nth-child(odd) {
   background-color: #cfe8a981;
 }
+
+/* successful page  */
+.successful {
+  text-align: center;
+  font-size: 28px;
+  padding: 10px;
+  border-radius: 3px;
+  background-color: rgb(3, 184, 3);
+  color: white;
+  font-weight: bold;
+}

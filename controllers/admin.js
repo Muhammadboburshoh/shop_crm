@@ -2,6 +2,36 @@ const Product = require('../models/product');
 
 const ITEMS_PER_PAGE = 5;
 
+exports.getProducts = async (req, res, next) => {
+  const page = +req.query.page || 1;
+  let search = req.query.search || null;
+  const username = req.cookies.__auth.user.login;
+  search = search ? search.trim() : search;
+
+  try {
+    const { product_count } = await Product.count(search);
+    const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
+
+    res.render('admin/all-products', {
+      pageTitle: 'All Products',
+      path: '/products',
+      username: username,
+      products: products,
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < product_count,
+      hasPerviousPage: page > 1,
+      nextPage: page + 1,
+      perviousPage: page - 1,
+      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE),
+      search: search
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
 exports.getAddProduct = (req, res, next) => {
   const username = req.cookies.__auth.user.login;
   res.render('admin/edit-product', {
@@ -37,36 +67,6 @@ exports.postAddProduct = async (req, res, next) => {
       username: username,
       editing: false,
       prodCreateing: true
-    });
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
-};
-
-exports.getProducts = async (req, res, next) => {
-  const page = +req.query.page || 1;
-  let search = req.query.search || null;
-  const username = req.cookies.__auth.user.login;
-  search = search ? search.trim() : search;
-
-  try {
-    const { product_count } = await Product.count(search);
-    const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
-
-    res.render('admin/all-products', {
-      pageTitle: 'All Products',
-      path: '/products',
-      username: username,
-      products: products,
-      currentPage: page,
-      hasNextPage: ITEMS_PER_PAGE * page < product_count,
-      hasPerviousPage: page > 1,
-      nextPage: page + 1,
-      perviousPage: page - 1,
-      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE),
-      search: search
     });
   } catch (err) {
     const error = new Error(err);
@@ -118,9 +118,6 @@ exports.postEditProduct = async (req, res, next) => {
   } = req.body;
   const description = req.body.description ? req.body.description : null;
 
-  console.log(prodId, prodItemId);
-  console.log(name, barcode, count, original_price, markup_price, description);
-
   try {
     const product = new Product(
       prodId,
@@ -134,7 +131,11 @@ exports.postEditProduct = async (req, res, next) => {
     );
     const result = await product.save();
 
-    res.redirect('/products');
+    res.render('201', {
+      pageTitle: 'Successful',
+      path: '/successful',
+      username: username
+    })
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;
