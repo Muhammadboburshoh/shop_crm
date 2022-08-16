@@ -105,4 +105,22 @@ module.exports = class Product {
       return row(findProductSql, prodId);
     }
   }
+
+  static deleteById(prodId, prodItemId) {
+    if (prodId) {
+      const deleteProductSql = `
+        delete from products
+        where
+          id = $1
+      `
+      return row(deleteProductSql, prodId)
+    } else if(prodItemId) {
+      const deleteProductItemSql = `
+        delete from product_items
+        where
+          id = $1
+      `
+      return row(deleteProductItemSql, prodItemId)
+    }
+  }
 };

@@ -46,10 +46,22 @@
                               <img src="/images/edit-button.png" alt="edit button" width="20" height="20">
                             </a>
                           </div>
+                          <div class="products_list-columns-item p-item-seventh">
+                            <form action="/delete-product" method="POST" enctype="application/x-www-form-urlencoded">
+                              <input type="hidden" value="<%= currentPage %>" name="currentPage">
+                              <% if(product.pi_id[i] !== null){ %>
+                                <input type="hidden" value="<%= product.pi_id[i] %>" name="prodItemId">
+                              <% } else { %>
+                                <input type="hidden" value="<%= product.id %>" name="prodId">
+                              <% } %>
+                              <button type="submit" class="categories__delete-btn">
+                                <img src="/images/delete-btn.png" alt="delete button" width="20" height="20">
+                              </button>
+                            </form>
+                          </div>
                         </div>
                       <% } %>
                     </div>
-                    <div class="products_list-columns-item p-item-seventh"><button data-id="<%= product.id %> " class="categories__delete-btn">o'chirish</button></div>
                   </div>
                 <% } %>
 

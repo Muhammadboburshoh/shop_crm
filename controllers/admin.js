@@ -108,14 +108,8 @@ exports.getEditProduct = async (req, res, next) => {
 // Try catch errorni ushlab qololmayapti.
 exports.postEditProduct = async (req, res, next) => {
   const username = req.cookies.__auth.user.login;
-  const {
-    name,
-    barcode,
-    count,
-    original_price,
-    markup_price,
-    prodId,
-  } = req.body;
+  const { name, barcode, count, original_price, markup_price, prodId } =
+    req.body;
   const prodItemId = req.body.prodItemId ? req.body.prodItemId : 0;
   const description = req.body.description ? req.body.description : null;
 
@@ -136,7 +130,23 @@ exports.postEditProduct = async (req, res, next) => {
       pageTitle: 'Successful',
       path: '/successful',
       username: username
-    })
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+exports.postDeleteProduct = async (req, res, next) => {
+  const prodId = req.body.prodId ? req.body.prodId : null;
+  const prodItemId = req.body.prodItemId ? req.body.prodItemId : null;
+  const currentPage = req.body.currentPage;
+
+  try {
+    const result = await Product.deleteById(prodId, prodItemId)
+
+    res.redirect(`/products?page=${currentPage}`);
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;
