@@ -92,3 +92,23 @@ group by
   p.description
 order by
   p.id;
+
+
+select
+  p.id as id,
+  p.name as name,
+  p.barcode as barcode,
+  p.description as description,
+  array_agg(pi.id) as pi_id,
+  array_agg(pi.count) as count,
+  array_agg(pi.original_price) as original_price,
+  array_agg(pi.markup_price) as markup_price,
+  array_agg(pi.status)::[] as status
+from
+  products as p
+left join
+  product_items as pi on pi.product_id = p.id
+group by
+  p.id,
+  p.name,
+  p.description;

@@ -48,7 +48,7 @@
             <div class="input-wrapper">
               <div class="toggle-pill-color">
                 <label class="checkbox-label" for="pill3">Status: </label>
-                <input type="checkbox" id="pill3" value="A" name="status">
+                <input type="checkbox" id="pill3" value="A" name="status" <% if (editing && product.status === 'A') { %>checked<% } %>>
                 <label for="pill3"></label>
               </div>
             </div>

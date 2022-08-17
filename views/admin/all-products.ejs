@@ -23,6 +23,7 @@
                 <div class="products__list-header-item p-item-third">Orginal Price</div>
                 <div class="products__list-header-item p-item-fourth">Makeup Price</div>
                 <div class="products__list-header-item p-item-fifth">Count</div>
+                <div class="products__list-header-item p-item-fifth">Status</div>
                 <div class="products__list-header-item p-item-sixth">Tahrirlash</div>
                 <div class="products__list-header-item p-item-seventh">O'chirish</div>
               </div>
@@ -38,6 +39,7 @@
                           <div class="products_list-columns-small p-item-third"><%= product.original_price[i] %></div>
                           <div class="products_list-columns-small p-item-fourth"><%= product.markup_price[i] %></div>
                           <div class="products_list-columns-small p-item-fifth"><%= product.count[i] %></div>
+                          <div class="products_list-columns-small p-item-fifth"><b style="font-size: 20px;"><%= product.status[i] %></b></div>
                           <div class="products_list-columns-small p-item-sixth">
                             <a href="/edit-product?edit=true&p_id=<%= product.id %>&pi_id=" class="categories__edit-btn">
                               <img src="/images/create-btn.png" alt="create button" width="20" height="20">
@@ -54,7 +56,7 @@
                               <% } else { %>
                                 <input type="hidden" value="<%= product.id %>" name="prodId">
                               <% } %>
-                              <button type="submit" class="categories__delete-btn">
+                              <button type="submit" class="categories__delete-btn product-item-delete">
                                 <img src="/images/delete-btn.png" alt="delete button" width="20" height="20">
                               </button>
                             </form>

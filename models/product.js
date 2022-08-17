@@ -26,9 +26,7 @@ module.exports = class Product {
   save() {
     if (this.prodId) {
       const productEditSql = `
-        select update_product(
-            $1, $2, $3, $4, $5, $6, $7, $8, $9
-          )
+        select update_product($1, $2, $3, $4, $5, $6, $7, $8, $9)
       `;
       return row(
         productEditSql,
@@ -43,7 +41,9 @@ module.exports = class Product {
         this.status
       );
     } else {
-      const productAddSql = `select add_product($1, $2, $3, $4, $5, $6, $7)`;
+      const productAddSql = `
+        select add_product($1, $2, $3, $4, $5, $6, $7)
+      `;
       return row(
         productAddSql,
         this.name,

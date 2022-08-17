@@ -81,7 +81,8 @@ create or replace function searching_products(_search text, _page int, _limit in
   pi_id int [],
   count int [],
   original_price varchar [],
-  markup_price varchar []
+  markup_price varchar [],
+  status varchar []
 ) language plpgsql as $$
 begin
   return query
@@ -93,7 +94,8 @@ begin
       array_agg(pi.id) as pi_id,
       array_agg(pi.count) as count,
       array_agg(pi.original_price) as original_price,
-      array_agg(pi.markup_price) as markup_price
+      array_agg(pi.markup_price) as markup_price,
+      array_agg(pi.status::varchar) as status
     from
       products as p
     left join
@@ -120,7 +122,8 @@ create or replace function all_products(_page int, _limit int) returns table(
   pi_id int [],
   count int [],
   original_price varchar [],
-  markup_price varchar []
+  markup_price varchar [],
+  status varchar []
 ) language plpgsql as $$
 begin
   return query
@@ -132,7 +135,8 @@ begin
       array_agg(pi.id) as pi_id,
       array_agg(pi.count) as count,
       array_agg(pi.original_price) as original_price,
-      array_agg(pi.markup_price) as markup_price
+      array_agg(pi.markup_price) as markup_price,
+      array_agg(pi.status::varchar) as status
     from
       products as p
     left join
@@ -195,7 +199,8 @@ create or replace function find_product_details(_p_id int, _pi_id int) returns t
   pi_id int,
   count int,
   original_price varchar,
-  markup_price varchar
+  markup_price varchar,
+  status varchar
 ) language plpgsql as $$
 begin
   return query
@@ -207,7 +212,8 @@ begin
       pi.id as pi_id,
       pi.count as count,
       pi.original_price as original_price,
-      pi.markup_price as markup_price
+      pi.markup_price as markup_price,
+      pi.status::varchar as status
     from
       products as p
     join

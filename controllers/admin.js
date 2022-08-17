@@ -112,6 +112,7 @@ exports.postEditProduct = async (req, res, next) => {
     req.body;
   const prodItemId = req.body.prodItemId ? req.body.prodItemId : 0;
   const description = req.body.description ? req.body.description : null;
+  const status = req.body.status ? 'A' : 'I';
 
   try {
     const product = new Product(
@@ -122,7 +123,8 @@ exports.postEditProduct = async (req, res, next) => {
       count,
       original_price,
       markup_price,
-      description
+      description,
+      status
     );
 
     await product.save();
