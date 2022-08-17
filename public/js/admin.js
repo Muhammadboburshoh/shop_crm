@@ -1,8 +1,7 @@
 const createProductEL = document.querySelector('.massage-box') || null;
 
-if(createProductEL) {
+if (createProductEL) {
   setTimeout(() => {
-    createProductEL.classList.add('d-none')
-  }, 3000)
+    createProductEL.classList.add('d-none');
+  }, 3000);
 }
-console.log(createProductEL);

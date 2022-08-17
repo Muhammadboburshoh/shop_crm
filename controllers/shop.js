@@ -6,11 +6,15 @@ exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
   let search = req.query.search || null;
   const username = req.cookies.__auth.user.login;
-  search = search ? search.trim(): search;
+  search = search ? search.trim() : search;
 
   try {
     const { product_count } = await Product.count(search);
-    const products = await Product.fetchAllShopping(search, page, ITEMS_PER_PAGE);
+    const products = await Product.fetchAllShopping(
+      search,
+      page,
+      ITEMS_PER_PAGE
+    );
 
     res.render('shop/product-list', {
       pageTitle: 'Home',

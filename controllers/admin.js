@@ -47,6 +47,7 @@ exports.postAddProduct = async (req, res, next) => {
   const username = req.cookies.__auth.user.login;
   const { name, barcode, count, original_price, markup_price } = req.body;
   const description = req.body.description ? req.body.description : null;
+  const status = req.body.status ? 'A' : 'I';
 
   try {
     const product = new Product(
@@ -57,10 +58,10 @@ exports.postAddProduct = async (req, res, next) => {
       count,
       original_price,
       markup_price,
-      description
+      description,
+      status
     );
     const result = await product.save();
-
     res.render('admin/edit-product', {
       pageTitle: 'Add Product',
       path: '/add-product',
@@ -105,7 +106,6 @@ exports.getEditProduct = async (req, res, next) => {
   }
 };
 
-// Try catch errorni ushlab qololmayapti.
 exports.postEditProduct = async (req, res, next) => {
   const username = req.cookies.__auth.user.login;
   const { name, barcode, count, original_price, markup_price, prodId } =
@@ -126,9 +126,6 @@ exports.postEditProduct = async (req, res, next) => {
     );
 
     await product.save();
-
-    // .then(() => console.log("OK"))
-    // .catch(err => console.error(err, "OK"));
 
     res.render('201', {
       pageTitle: 'Successful',

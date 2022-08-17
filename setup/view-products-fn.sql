@@ -6,7 +6,6 @@ create or replace function searching_products_for_sale(_search text, _page int, 
   barcode varchar,
   description text,
   count integer,
-  original_price bigint,
   markup_price bigint
 ) language plpgsql as $$
 begin
@@ -18,10 +17,7 @@ begin
       p.description as description,
       sum(pi.count)::integer as count,
       CASE
-        WHEN pi.status = 'A' THEN max(pi.original_price)::bigint
-      END as original_price,
-      CASE
-        WHEN pi.status = 'A' THEN max(pi.markup_price)::bigint
+        WHEN MIN(pi.status) = 'A' THEN max(pi.markup_price)::bigint
       END as markup_price
     from
       products as p
@@ -47,7 +43,6 @@ create or replace function products_for_sale(_page int, _limit int) returns tabl
   barcode varchar,
   description text,
   count integer,
-  original_price bigint,
   markup_price bigint
 ) language plpgsql as $$
 begin
@@ -59,10 +54,7 @@ begin
       p.description as description,
       sum(pi.count)::integer as count,
       CASE
-        WHEN pi.status = 'A' THEN max(pi.original_price)::bigint
-      END as original_price,
-      CASE
-        WHEN pi.status = 'A' THEN max(pi.markup_price)::bigint
+        WHEN MIN(pi.status) = 'A' THEN max(pi.markup_price)::bigint
       END as markup_price
     from
       products as p
@@ -193,7 +185,7 @@ begin
 end;
 $$;
 
---Find product details
+--Find product and product details
 drop function find_product_details;
 create or replace function find_product_details(_p_id int, _pi_id int) returns table(
   id int,

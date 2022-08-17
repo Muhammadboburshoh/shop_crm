@@ -6,7 +6,8 @@ create function add_product(
   _count int,
   _original_price text,
   _markup_price text,
-  _des text
+  _des text,
+  _status is_active
 ) returns int language plpgsql as $$ declare p_last_id int;
 begin
   insert into
@@ -16,13 +17,14 @@ begin
 
     if p_last_id > 0 then
       insert into
-        product_items(product_id, count, original_price, markup_price)
+        product_items(product_id, count, original_price, markup_price, status)
       values
       (
         p_last_id,
         _count,
         _original_price,
-        _markup_price
+        _markup_price,
+        _status
       );
       return 1;
     else
@@ -41,7 +43,8 @@ create function update_product(
   _count int,
   _original_price text,
   _markup_price text,
-  _des text
+  _des text,
+  _status is_active
 ) returns int language plpgsql as $$ declare p_last_id int;
 declare
   _p_last_id int;
@@ -59,20 +62,22 @@ begin
 
     if _pi_id = 0 then
       insert into
-          product_items(product_id, count, original_price, markup_price)
+          product_items(product_id, count, original_price, markup_price, status)
         values
         (
           _p_last_id,
           _count,
           _original_price,
-          _markup_price
+          _markup_price,
+          _status
         ) returning id into _pi_last_id;
     else
       update product_items
       set
         count = _count,
         original_price = _original_price,
-        markup_price = _markup_price
+        markup_price = _markup_price,
+        status = _status
       where
         id = _pi_id 
       returning id into _pi_last_id;

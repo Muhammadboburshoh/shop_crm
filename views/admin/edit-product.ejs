@@ -1,5 +1,6 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/style/header.css">
+    <link rel="stylesheet" href="/style/checkbox.css">
   </head>
 
   <body>
@@ -21,28 +22,35 @@
           <form class="category__create-form" action="/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="application/x-www-form-urlencoded">
             <h3 class="parrent-hading">Yangi product qo'shing!</h3>
             <div class="input-wrapper">
-              <label for="create-category">Product nomi: </label>
-              <input name="name" class="category__create-input" type="text" placeholder="name" required  value="<% if (editing) { %><%= product.name %><% } %>"/>
+              <label for="name">Product nomi: </label>
+              <input name="name" class="category__create-input" type="text" placeholder="name" required value="<% if (editing) { %><%= product.name %><% } %>" id="name"/>
             </div>
             <div class="input-wrapper">
-              <label for="create-category">Shrix code raqamlarini kiriting: </label>
-              <input name="barcode" class="category__create-input" type="number" placeholder="barcode" required value="<% if (editing) { %><%= product.barcode %><% } %>" />
+              <label for="barcode">Shrix code raqamlarini kiriting: </label>
+              <input name="barcode" class="category__create-input" type="number" placeholder="barcode" required value="<% if (editing) { %><%= product.barcode %><% } %>" id="barcode"/>
             </div>
             <div class="input-wrapper">
-              <label for="create-category">Product soni: </label>
-              <input name="count" class="category__create-input" type="number" placeholder="count" required value="<% if (editing) { %><%= product.count %><% } %>"/>
+              <label for="count">Product soni: </label>
+              <input name="count" class="category__create-input" type="number" placeholder="count" required value="<% if (editing) { %><%= product.count %><% } %>" id="count"/>
             </div>
             <div class="input-wrapper">
-              <label for="create-category">Sotib olingan narx: </label>
-              <input name="original_price" class="category__create-input" type="number" placeholder="orginal price" required value="<% if (editing) { %><%= product.original_price %><% } %>" />
+              <label for="original_price">Sotib olingan narx: </label>
+              <input name="original_price" class="category__create-input" type="number" placeholder="orginal price" required value="<% if (editing) { %><%= product.original_price %><% } %>" id="original_price"/>
             </div>
             <div class="input-wrapper">
-              <label for="create-category">Sotuvdagi narxi: </label>
-              <input name="markup_price" class="category__create-input" type="number" placeholder="markup price" required value="<% if (editing) { %><%= product.markup_price %><% } %>"/>
+              <label for="markup_price">Sotuvdagi narxi: </label>
+              <input name="markup_price" class="category__create-input" type="number" placeholder="markup price" required value="<% if (editing) { %><%= product.markup_price %><% } %>" id="markup_price"/>
             </div>
             <div class="input-wrapper">
-              <label for="create-category">Mahsulot haqida: </label>
-              <textarea name="description" class="category__create-input textarea-style" placeholder="description"><% if (editing) { %><%= product.description %><% } %></textarea>
+              <label for="description">Mahsulot haqida: </label>
+              <textarea name="description" class="category__create-input textarea-style" placeholder="description" id="description"><% if (editing) { %><%= product.description %><% } %></textarea>
+            </div>
+            <div class="input-wrapper">
+              <div class="toggle-pill-color">
+                <label class="checkbox-label" for="pill3">Status: </label>
+                <input type="checkbox" id="pill3" value="A" name="status">
+                <label for="pill3"></label>
+              </div>
             </div>
             <% if (editing) { %>
               <input type="hidden" value="<%= product.id %>" name="prodId">

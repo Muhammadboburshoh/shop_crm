@@ -33,7 +33,7 @@ const row = async (SQL, ...params) => {
     } = await connect.query(SQL, params);
     return row;
   } catch (e) {
-    throw e
+    throw e;
   } finally {
     connect.release();
   }

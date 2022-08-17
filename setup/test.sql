@@ -80,12 +80,8 @@ select
   p.barcode as barcode,
   p.description as description,
   sum(pi.count)::integer as count,
-  CASE
-    WHEN MIN(pi.status) = 'A' THEN max(pi.original_price)::bigint
-  END as original_price,
-  CASE
-    WHEN MIN(pi.status) = 'A' THEN max(pi.markup_price)::bigint
-  END as markup_price
+  (select pi.markup_price from product_items where pi.status not in ('I')),
+  max(pi.status)
 from
   products as p
 join

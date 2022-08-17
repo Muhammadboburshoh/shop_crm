@@ -23,14 +23,13 @@ app.use(authRoutes);
 app.use(adminRoutes);
 app.use(shopRoutes);
 
-
 app.get('/500', errorController.get500);
 app.use(errorController.get404);
 app.use((error, req, res, next) => {
-  console.log(error, "app.js");
+  console.log(error, 'app.js');
   res.status(500).render('500', {
     pageTitle: 'Error!',
-    path: '/500',
+    path: '/500'
   });
 });
 

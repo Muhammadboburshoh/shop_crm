@@ -9,7 +9,8 @@ module.exports = class Product {
     count,
     original_price,
     markup_price,
-    description
+    description,
+    status
   ) {
     this.prodId = prodId;
     this.prodItemId = prodItemId;
@@ -19,13 +20,14 @@ module.exports = class Product {
     this.original_price = original_price;
     this.markup_price = markup_price;
     this.description = description;
+    this.status = status;
   }
 
   save() {
     if (this.prodId) {
       const productEditSql = `
         select update_product(
-            $1, $2, $3, $4, $5, $6, $7, $8
+            $1, $2, $3, $4, $5, $6, $7, $8, $9
           )
       `;
       return row(
@@ -37,10 +39,11 @@ module.exports = class Product {
         this.count,
         this.original_price,
         this.markup_price,
-        this.description
+        this.description,
+        this.status
       );
     } else {
-      const productAddSql = `select add_product($1, $2, $3, $4, $5, $6)`;
+      const productAddSql = `select add_product($1, $2, $3, $4, $5, $6, $7)`;
       return row(
         productAddSql,
         this.name,
@@ -48,7 +51,8 @@ module.exports = class Product {
         this.count,
         this.original_price,
         this.markup_price,
-        this.description
+        this.description,
+        this.status
       );
     }
   }
@@ -112,15 +116,15 @@ module.exports = class Product {
         delete from products
         where
           id = $1
-      `
-      return row(deleteProductSql, prodId)
-    } else if(prodItemId) {
+      `;
+      return row(deleteProductSql, prodId);
+    } else if (prodItemId) {
       const deleteProductItemSql = `
         delete from product_items
         where
           id = $1
-      `
-      return row(deleteProductItemSql, prodItemId)
+      `;
+      return row(deleteProductItemSql, prodItemId);
     }
   }
 };
