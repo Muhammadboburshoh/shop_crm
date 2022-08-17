@@ -124,7 +124,11 @@ exports.postEditProduct = async (req, res, next) => {
       markup_price,
       description
     );
-    const result = await product.save();
+
+    await product.save();
+
+    // .then(() => console.log("OK"))
+    // .catch(err => console.error(err, "OK"));
 
     res.render('201', {
       pageTitle: 'Successful',
@@ -144,7 +148,7 @@ exports.postDeleteProduct = async (req, res, next) => {
   const currentPage = req.body.currentPage;
 
   try {
-    const result = await Product.deleteById(prodId, prodItemId)
+    const result = await Product.deleteById(prodId, prodItemId);
 
     res.redirect(`/products?page=${currentPage}`);
   } catch (err) {

@@ -17,8 +17,12 @@ begin
       p.barcode as barcode,
       p.description as description,
       sum(pi.count)::integer as count,
-      max(pi.original_price)::bigint as original_price,
-      max(pi.markup_price)::bigint as markup_price
+      CASE
+        WHEN pi.status = 'A' THEN max(pi.original_price)::bigint
+      END as original_price,
+      CASE
+        WHEN pi.status = 'A' THEN max(pi.markup_price)::bigint
+      END as markup_price
     from
       products as p
     join
@@ -54,8 +58,12 @@ begin
       p.barcode as barcode,
       p.description as description,
       sum(pi.count)::integer as count,
-      max(pi.original_price)::bigint as original_price,
-      max(pi.markup_price)::bigint as markup_price
+      CASE
+        WHEN pi.status = 'A' THEN max(pi.original_price)::bigint
+      END as original_price,
+      CASE
+        WHEN pi.status = 'A' THEN max(pi.markup_price)::bigint
+      END as markup_price
     from
       products as p
     join

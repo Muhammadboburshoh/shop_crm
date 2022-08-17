@@ -64,3 +64,35 @@ create function audit() returns trigger language plpgsql as $$
 $$;
 
 create trigger user_audit before delete on users for each row execute procedure audit();
+
+
+
+
+
+
+
+
+
+
+select
+  p.id as id,
+  p.name as name,
+  p.barcode as barcode,
+  p.description as description,
+  sum(pi.count)::integer as count,
+  CASE
+    WHEN MIN(pi.status) = 'A' THEN max(pi.original_price)::bigint
+  END as original_price,
+  CASE
+    WHEN MIN(pi.status) = 'A' THEN max(pi.markup_price)::bigint
+  END as markup_price
+from
+  products as p
+join
+  product_items as pi on pi.product_id = p.id
+group by
+  p.id,
+  p.name,
+  p.description
+order by
+  p.id;
