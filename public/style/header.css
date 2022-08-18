@@ -30,6 +30,7 @@ body {
 
 .profile {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -89,6 +90,8 @@ body {
 
 .header__right {
   margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 /*sidebar css*/
@@ -534,4 +537,12 @@ body {
   background-color: rgb(3, 184, 3);
   color: white;
   font-weight: bold;
+}
+
+.basket-img-wrapper {
+  margin-right: 50px;
+}
+
+.basket-img {
+  cursor: pointer;
 }

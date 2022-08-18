@@ -1,5 +1,6 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/style/header.css">
+    <link rel="stylesheet" href="/style/basket.css">
   </head>
 
   <body>
@@ -40,7 +41,7 @@
                         <%= product.count %>
                       </th>
                       <th class="categories__tbody-td">
-                        <input name="name" class="category__create-input" type="number" placeholder="soni" min="1" value="1" required />
+                        <input name="name" class="category__create-input" type="number" placeholder="soni" min="1" value="1" required  autocomplete="off"/>
                         <button type="submit" data-id="<%= product.id %>" class="category__create-btn" data-update="0">
                           <b style="font-size: 20px; padding: -5px;">+</b>
                         </button>
@@ -56,8 +57,57 @@
             <h1>No Products Found!</h1>
           <% } %>
 
+
+          <section class="d-none all-backet">
+            <div class="no-content"></div>
+            <div class="backet-content">
+              <section class="backet">
+                <div class="backet__container">
+                  <div class="basket__header">
+                    <img width="50" height="50" src="/images/basket.png" alt="basket" />
+                    <h2 class="basket__heading">Savatcha</h2>
+                    <button class="close_button"></button>
+                  </div>
+      
+                  <main class="basket__main">
+                    <table class="basket-table">
+                      <thead>
+                        <tr>
+                          <th class="basket-th">Nomi</th>
+                          <th class="basket-th">Nechta</th>
+                          <th class="basket-th">Narxi</th>
+                          <th class="basket-th">DEL</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr key={Math.random()}>
+                          <td class="basket-td">{d.product_name}</td>
+                          <td class="basket-td">{d.product_count}</td>
+                          <td class="basket-td">{(d.product_count - 0) * (d.product_price - 0)}</td>
+                          <td class="basket-td">
+                            <button class="delete_btn"></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="price">
+                      <span>Jami: </span>
+                      <span>{price} so'm</span>
+                    </div>
+
+                    <!-- jsda shunga settime out qo'yish kk "big_order" classni qo'shish kk-->
+                    <h1 id="big_order" class="d-none">Buyurtma berildi!</h1>
+                  </main> 
+                  <button class="basket__btn">Buyurtma berish</button>
+                </div>
+              </section>
+            </div>
+          </section>
+
         </section>
       </div>
     </div>
 
+  <script src="/js/basket.js"></script>
   <%- include('../includes/end.ejs') %>
