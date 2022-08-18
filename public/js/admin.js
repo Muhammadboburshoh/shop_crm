@@ -5,10 +5,17 @@ if (createProductEL) {
   }, 3000);
 }
 
-const productDeleteBtns = document.querySelectorAll('.product-item-delete')
+const productDeleteBtns = document.querySelectorAll('.product-item-delete');
 
-
-productDeleteBtn.addEventListener('click', (event) => {
-  event.preventDefault();
-  const result = confirm('Siz haqaiqatdan ');
-})
+productDeleteBtns.forEach((btn, i) => {
+  btn.addEventListener('click', event => {
+    const isRealy = confirm(
+      `Productni yoki unga bog'langan tafsilotlarini o'chirishga ishonchingiz komilmi.\nAgar o'chirsangiz unga bog'langan barcha orderlar ham o'chib ketadi!`
+    );
+    if (isRealy) {
+      return true;
+    } else {
+      event.preventDefault();
+    }
+  });
+});
