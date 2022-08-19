@@ -1,6 +1,6 @@
 const Product = require('../models/product');
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 10;
 
 exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;

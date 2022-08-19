@@ -1,7 +1,14 @@
-.products__list,
 .products__list-main {
   outline: 1px solid #ddd;
   text-align: center;
+}
+
+.products__list {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .products__list-header,
@@ -13,15 +20,17 @@
 }
 
 .products__list-header {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+.products__list-header {
   font-weight: bold;
 }
 
 .products_list-columns:nth-child(even) {
-  background-color: #fffde3;
-}
-
-.products_list-columns:nth-child(odd) {
-  background-color: #cfe8a981;
+  background-color: #e7e6e6;
 }
 
 .products__list-header-item,
