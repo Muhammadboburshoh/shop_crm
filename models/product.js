@@ -10,7 +10,7 @@ module.exports = class Product {
     original_price,
     markup_price,
     description,
-    status
+    userId
   ) {
     this.prodId = prodId;
     this.prodItemId = prodItemId;
@@ -20,7 +20,7 @@ module.exports = class Product {
     this.original_price = original_price;
     this.markup_price = markup_price;
     this.description = description;
-    this.status = status;
+    this.userId = userId;
   }
 
   save() {
@@ -38,7 +38,7 @@ module.exports = class Product {
         this.original_price,
         this.markup_price,
         this.description,
-        this.status
+        this.userId
       );
     } else {
       const productAddSql = `
@@ -52,7 +52,7 @@ module.exports = class Product {
         this.original_price,
         this.markup_price,
         this.description,
-        this.status
+        this.userId
       );
     }
   }

@@ -5,26 +5,24 @@ create function add_product(
   _barcode text,
   _count int,
   _original_price text,
-  _markup_price text,
+  _sale_price text,
   _des text,
-  _status is_active
+  _user_id int
 ) returns int language plpgsql as $$ declare p_last_id int;
 begin
   insert into
-    products(name, barcode, description)
+    products(name, barcode, description, sale_price, user_id)
   values
-    (_name, _barcode, _des) returning id into p_last_id;
+    (_name, _barcode, _des, _sale_price, _user_id) returning id into p_last_id;
 
     if p_last_id > 0 then
       insert into
-        product_items(product_id, count, original_price, markup_price, status)
+        product_items(product_id, count, original_price)
       values
       (
         p_last_id,
         _count,
-        _original_price,
-        _markup_price,
-        _status
+        _original_price
       );
       return 1;
     else
@@ -42,7 +40,7 @@ create function update_product(
   _barcode text,
   _count int,
   _original_price text,
-  _markup_price text,
+  _sale_price text,
   _des text,
   _status is_active
 ) returns int language plpgsql as $$ declare p_last_id int;

@@ -44,10 +44,9 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
-  const username = req.cookies.__auth.user.login;
-  const { name, barcode, count, original_price, markup_price } = req.body;
+  const { login: username, id: userId } = req.cookies.__auth.user;
+  const { name, barcode, count, original_price, sale_price } = req.body;
   const description = req.body.description ? req.body.description : null;
-  const status = req.body.status ? 'A' : 'I';
 
   try {
     const product = new Product(
@@ -57,9 +56,9 @@ exports.postAddProduct = async (req, res, next) => {
       barcode,
       count,
       original_price,
-      markup_price,
+      sale_price,
       description,
-      status
+      userId
     );
     const result = await product.save();
     res.render('admin/edit-product', {

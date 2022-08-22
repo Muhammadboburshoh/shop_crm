@@ -20,10 +20,9 @@
               <div class="products__list-header">
                 <div class="products__list-header-item p-item-first">Name</div>
                 <div class="products__list-header-item p-item-second">Barcode</div>
+                <div class="products__list-header-item p-item-fourth">Sale Price</div>
                 <div class="products__list-header-item p-item-third">Orginal Price</div>
-                <div class="products__list-header-item p-item-fourth">Makeup Price</div>
                 <div class="products__list-header-item p-item-fifth">Count</div>
-                <div class="products__list-header-item p-item-fifth">Status</div>
                 <div class="products__list-header-item p-item-sixth">Tahrirlash</div>
                 <div class="products__list-header-item p-item-seventh">O'chirish</div>
               </div>
@@ -33,15 +32,14 @@
                   <div class="products_list-columns">
                     <div class="products_list-columns-item p-item-first"><%= product.name %></div>
                     <div class="products_list-columns-item p-item-second"><%= product.barcode %></div>
+                    <div class="products_list-columns-item p-item-fourth"><%= product.sale_price %></div>
                     <div class="products_list-columns-item-therd">
                       <% for (let i=0; i < product.original_price.length; i++ ) { %>
                         <div class="products_list-columns-item-samll">
                           <div class="products_list-columns-small p-item-third"><%= product.original_price[i] %></div>
-                          <div class="products_list-columns-small p-item-fourth"><%= product.markup_price[i] %></div>
                           <div class="products_list-columns-small p-item-fifth"><%= product.count[i] %></div>
-                          <div class="products_list-columns-small p-item-fifth"><b style="font-size: 20px;"><%= product.status[i] %></b></div>
                           <div class="products_list-columns-small p-item-sixth">
-                            <a href="/edit-product?edit=true&p_id=<%= product.id %>&pi_id=" class="categories__edit-btn">
+                            <a href="/edit-product?edit=true&p_id=<%= product.id %>" class="categories__edit-btn">
                               <img src="/images/create-btn.png" alt="create button" width="20" height="20">
                             </a>
                             <a href="/edit-product?edit=true&p_id=<%= product.id %>&pi_id=<%= product.pi_id[i] %>" class="categories__edit-btn">

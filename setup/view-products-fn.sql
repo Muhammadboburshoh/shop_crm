@@ -78,11 +78,13 @@ create or replace function searching_products(_search text, _page int, _limit in
   name text,
   barcode varchar,
   description text,
+  sale_price varchar,
+  p_user_id int,
+  p_created_at timestamp with time zone,
   pi_id int [],
   count int [],
   original_price varchar [],
-  markup_price varchar [],
-  status varchar []
+  pi_created_at timestamp with time zone []
 ) language plpgsql as $$
 begin
   return query
@@ -91,11 +93,13 @@ begin
       p.name as name,
       p.barcode as barcode,
       p.description as description,
+      p.sale_price as sale_price,
+      p.user_id as p_user_id,
+      p.created_at as p_created_at,
       array_agg(pi.id) as pi_id,
       array_agg(pi.count) as count,
       array_agg(pi.original_price) as original_price,
-      array_agg(pi.markup_price) as markup_price,
-      array_agg(pi.status::varchar) as status
+      array_agg(pi.created_at) as pi_created_at
     from
       products as p
     left join
@@ -105,7 +109,11 @@ begin
     group by
       p.id,
       p.name,
-      p.description
+      p.description,
+      p.barcode,
+      p.sale_price,
+      p.user_id,
+      p.created_at
     order by
       p.id
     offset (_page - 1) * _limit limit _limit;
@@ -119,11 +127,13 @@ create or replace function all_products(_page int, _limit int) returns table(
   name text,
   barcode varchar,
   description text,
+  sale_price varchar,
+  p_user_id int,
+  p_created_at timestamp with time zone,
   pi_id int [],
   count int [],
   original_price varchar [],
-  markup_price varchar [],
-  status varchar []
+  pi_created_at timestamp with time zone []
 ) language plpgsql as $$
 begin
   return query
@@ -132,11 +142,13 @@ begin
       p.name as name,
       p.barcode as barcode,
       p.description as description,
+      p.sale_price as sale_price,
+      p.user_id as p_user_id,
+      p.created_at as p_created_at,
       array_agg(pi.id) as pi_id,
       array_agg(pi.count) as count,
       array_agg(pi.original_price) as original_price,
-      array_agg(pi.markup_price) as markup_price,
-      array_agg(pi.status::varchar) as status
+      array_agg(pi.created_at) as pi_created_at
     from
       products as p
     left join
@@ -144,7 +156,11 @@ begin
     group by
       p.id,
       p.name,
-      p.description
+      p.description,
+      p.barcode,
+      p.sale_price,
+      p.user_id,
+      p.created_at
     order by
       p.id
     offset (_page - 1) * _limit limit _limit;
@@ -173,7 +189,10 @@ create or replace function find_product(_p_id int) returns table(
   id int,
   name text,
   barcode varchar,
-  description text
+  description text,
+  sale_price varchar,
+  p_user_id int,
+  p_created_at timestamp with time zone
 ) language plpgsql as $$
 begin
   return query
@@ -181,7 +200,10 @@ begin
       p.id as id,
       p.name as name,
       p.barcode as barcode,
-      p.description as description
+      p.description as description,
+      p.sale_price as sale_price,
+      p.user_id as p_user_id,
+      p.created_at as p_created_at
     from
       products as p
     where
@@ -196,11 +218,13 @@ create or replace function find_product_details(_p_id int, _pi_id int) returns t
   name text,
   barcode varchar,
   description text,
+  sale_price varchar,
+  p_user_id int,
+  p_created_at timestamp with time zone,
   pi_id int,
   count int,
   original_price varchar,
-  markup_price varchar,
-  status varchar
+  pi_created_at timestamp with time zone
 ) language plpgsql as $$
 begin
   return query
@@ -209,11 +233,13 @@ begin
       p.name as name,
       p.barcode as barcode,
       p.description as description,
+      p.sale_price as sale_price,
+      p.user_id as p_user_id,
+      p.created_at as p_created_at,
       pi.id as pi_id,
       pi.count as count,
       pi.original_price as original_price,
-      pi.markup_price as markup_price,
-      pi.status::varchar as status
+      pi.created_at as pi_created_at
     from
       products as p
     join
