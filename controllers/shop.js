@@ -1,6 +1,7 @@
 const Product = require('../models/product');
+const Order = require('../models/order');
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 3;
 
 exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
@@ -35,3 +36,14 @@ exports.getProducts = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.postOrderProduct = async (req, res, next) => {
+  const { login: username, id: userId } = req.cookies.__auth.user;
+  const { prodId, prodItemId, count } = req.body;
+  const { search, page } = req.query;
+
+  console.log(prodId, prodItemId, count, page, search);
+  const order = new Order(prodId, prodItemId, count, userId);
+  await order.save();
+  res.send("OK")
+}

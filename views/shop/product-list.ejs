@@ -37,9 +37,11 @@
                         <div class="products_list-columns-item-samll">
                           <div class="products_list-columns-small p-item-fifth"><%= product.count[i] %></div>
                           <div class="products_list-columns-item sale-p-item-seventh">
-                            <form action="/delete-product?page=<%= currentPage %> " method="POST" enctype="application/x-www-form-urlencoded">
-                              <input name="name" class="category__create-input product_count" type="number" placeholder="soni" min="1" max="10000" required  autocomplete="off"/>
-                              <button type="submit" data-id="<%= product.id %>" class="category__create-btn" data-update="0">
+                            <form action="/orders?page=<%= currentPage %><% if(search){ %>&search=<%= search %>  <% } %> " method="POST" enctype="application/x-www-form-urlencoded">
+                              <input type="hidden" name="prodId" value="<%= product.id %>">
+                              <input type="hidden" name="prodItemId" value="<%= product.pi_id[i] %>">
+                              <input type="number" name="count" class="category__create-input product_count" placeholder="soni" min="1" max="10000" required  autocomplete="off"/>
+                              <button type="submit" class="category__create-btn">
                                 <b style="font-size: 20px; padding: -5px;">+</b>
                               </button>
                             </form>
