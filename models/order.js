@@ -23,7 +23,12 @@ module.exports = class Order {
     }
   }
 
-  static fetchAll(search, page, limit) {}
+  static fetchAll(userId) {
+    const allOrdersSql = `
+      select * from first_stage_orders($1)
+    `;
+    return rows(allOrdersSql, userId);
+  }
 
   static count(search) {}
 

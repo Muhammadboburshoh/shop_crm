@@ -105,7 +105,7 @@ begin
     left join
       product_items as pi on pi.product_id = p.id
     where
-      (p.name ilike '%' || _search || '%' or p.barcode ilike '%' || _search || '%') and p.is_delete = false
+      (p.name ilike '%' || _search || '%' or p.barcode ilike '%' || _search || '%') and p.is_delete = false and pi.is_delete = false
     group by
       p.id,
       p.name,
@@ -154,7 +154,7 @@ begin
     left join
       product_items as pi on pi.product_id = p.id
     where
-      p.is_delete = false
+      p.is_delete = false and pi.is_delete = false
     group by
       p.id,
       p.name,

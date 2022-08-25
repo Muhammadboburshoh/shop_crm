@@ -4,24 +4,23 @@ const Order = require('../models/order');
 const ITEMS_PER_PAGE = 3;
 
 exports.getProducts = async (req, res, next) => {
+  const { id: userId, login: username } = req.cookies.__auth.user;
   const page = +req.query.page || 1;
   let search = req.query.search || null;
-  const username = req.cookies.__auth.user.login;
   search = search ? search.trim() : search;
 
   try {
     const { products_count } = await Product.count(search);
-    const products = await Product.fetchAll(
-      search,
-      page,
-      ITEMS_PER_PAGE
-    );
+    const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
+
+    const orders = await Order.fetchAll(userId);
 
     res.render('shop/product-list', {
       pageTitle: 'Home',
       path: '/',
       username: username,
       products: products,
+      orders: orders,
       currentPage: page,
       hasNextPage: ITEMS_PER_PAGE * page < products_count,
       hasPerviousPage: page > 1,
@@ -38,12 +37,15 @@ exports.getProducts = async (req, res, next) => {
 };
 
 exports.postOrderProduct = async (req, res, next) => {
-  const { login: username, id: userId } = req.cookies.__auth.user;
+  const { id: userId } = req.cookies.__auth.user;
   const { prodId, prodItemId, count } = req.body;
   const { search, page } = req.query;
-
   console.log(prodId, prodItemId, count, page, search);
+  const redirectUrl = search
+    ? `/?page=${page}&search=${search}`
+    : `/?page=${page}`;
+
   const order = new Order(prodId, prodItemId, count, userId);
   await order.save();
-  res.send("OK")
-}
+  res.redirect(redirectUrl);
+};

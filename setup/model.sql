@@ -34,6 +34,7 @@ create table product_items (
   product_id int not null,
   count int not null,
   original_price varchar,
+  is_delete boolean default false,
   created_at timestamp with time zone default current_timestamp,
   CONSTRAINT fk_product_items_product_id
     FOREIGN KEY(product_id)
@@ -61,6 +62,7 @@ create table order_items(
   total_price varchar not null,
   original_total_price varchar not null,
   order_id int not null,
+  pi_id int not null,
   created_at timestamp with time zone default current_timestamp,
   CONSTRAINT fk_order_items_product_id
     FOREIGN KEY(product_id) 
@@ -69,5 +71,9 @@ create table order_items(
   CONSTRAINT fk_order_items_order_id
     FOREIGN KEY(order_id) 
       REFERENCES orders(id)
-      ON DELETE SET NULL
+      ON DELETE SET NULL,
+  CONSTRAINT fk_order_items_product_items_id
+    FOREIGN KEY(pi_id) 
+      REFERENCES product_items(id)
+      ON DELETE SET NULL,
 );

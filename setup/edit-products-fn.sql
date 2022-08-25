@@ -91,7 +91,9 @@ drop function delete_product;
 create function delete_product(_p_id int, _pi_id int) returns int language plpgsql as $$
 begin
   if _p_id = 0 then
-    delete from product_items
+    update product_items
+    set
+      is_delete = true
     where
       id = _pi_id;
 

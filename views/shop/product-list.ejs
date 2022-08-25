@@ -40,7 +40,7 @@
                             <form action="/orders?page=<%= currentPage %><% if(search){ %>&search=<%= search %>  <% } %> " method="POST" enctype="application/x-www-form-urlencoded">
                               <input type="hidden" name="prodId" value="<%= product.id %>">
                               <input type="hidden" name="prodItemId" value="<%= product.pi_id[i] %>">
-                              <input type="number" name="count" class="category__create-input product_count" placeholder="soni" min="1" max="10000" required  autocomplete="off"/>
+                              <input type="number" name="count" class="category__create-input product_count" placeholder="soni" min="1" max="<%= product.count[i] %>" required  autocomplete="off"/>
                               <button type="submit" class="category__create-btn">
                                 <b style="font-size: 20px; padding: -5px;">+</b>
                               </button>
@@ -74,31 +74,40 @@
                   </div>
       
                   <main class="basket__main">
-                    <table class="basket-table">
-                      <thead>
-                        <tr>
-                          <th class="basket-th">Nomi</th>
-                          <th class="basket-th">Nechta</th>
-                          <th class="basket-th">Narxi</th>
-                          <th class="basket-th">DEL</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td class="basket-td">Daftar</td>
-                          <td class="basket-td">10</td>
-                          <td class="basket-td">5000 so'm</td>
-                          <td class="basket-td">
-                            <button class="delete_btn"></button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <% if(orders.length > 0) { %>
 
-                    <div class="price">
-                      <span>Jami: </span>
-                      <span>10000 so'm so'm</span>
-                    </div>
+                      <table class="basket-table">
+                        <thead>
+                          <tr>
+                            <th class="basket-th">Nomi</th>
+                            <th class="basket-th">Nechta</th>
+                            <th class="basket-th order_product_price">Narxi</th>
+                            <th class="basket-th">DEL</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% orders.forEach(p => { %> 
+                          <tr>
+                            <td class="basket-td"><%= p.name %></td>
+                            <td class="basket-td"><%= p.count %></td>
+                            <td class="basket-td"><%= p.total_price.replace(/(?=(?:.{3})*$)/g, ' ') %></td>
+                            <td class="basket-td">
+                              <button class="delete_btn"></button>
+                            </td>
+                          </tr>
+                          <% }) %> 
+                        </tbody>
+                      </table>
+
+                      <div class="price">
+                        <span>Jami: </span>
+                        <span>10000 so'm so'm</span>
+                      </div>
+                    <% } else { %>
+                      <h2>Not product orders</h2>
+                    <% } %>
+
+                    
 
                     <!-- jsda shunga settime out qo'yish kk "big_order" classni qo'shish kk-->
                     <h1 id="big_order" class="d-none">Buyurtma berildi!</h1>
