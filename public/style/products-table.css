@@ -96,3 +96,27 @@
   padding: 10px 5px;
   justify-content: center;
 }
+
+
+/* sale page */
+.sale-p-item-second {
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sale-p-item-fourth {
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sale-p-item-seventh {
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  /* padding: 10px 5px; */
+  justify-content: center;
+}

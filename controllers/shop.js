@@ -9,8 +9,8 @@ exports.getProducts = async (req, res, next) => {
   search = search ? search.trim() : search;
 
   try {
-    const { product_count } = await Product.count(search);
-    const products = await Product.fetchAllShopping(
+    const { products_count } = await Product.count(search);
+    const products = await Product.fetchAll(
       search,
       page,
       ITEMS_PER_PAGE
@@ -22,11 +22,11 @@ exports.getProducts = async (req, res, next) => {
       username: username,
       products: products,
       currentPage: page,
-      hasNextPage: ITEMS_PER_PAGE * page < product_count,
+      hasNextPage: ITEMS_PER_PAGE * page < products_count,
       hasPerviousPage: page > 1,
       nextPage: page + 1,
       perviousPage: page - 1,
-      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE),
+      lastPage: Math.ceil(products_count / ITEMS_PER_PAGE),
       search: search
     });
   } catch (err) {

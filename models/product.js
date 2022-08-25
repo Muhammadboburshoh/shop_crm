@@ -8,7 +8,7 @@ module.exports = class Product {
     barcode,
     count,
     original_price,
-    markup_price,
+    sale_price,
     description,
     userId
   ) {
@@ -18,7 +18,7 @@ module.exports = class Product {
     this.barcode = barcode;
     this.count = count;
     this.original_price = original_price;
-    this.markup_price = markup_price;
+    this.sale_price = sale_price;
     this.description = description;
     this.userId = userId;
   }
@@ -36,7 +36,7 @@ module.exports = class Product {
         this.barcode,
         this.count,
         this.original_price,
-        this.markup_price,
+        this.sale_price,
         this.description,
         this.userId
       );
@@ -50,26 +50,26 @@ module.exports = class Product {
         this.barcode,
         this.count,
         this.original_price,
-        this.markup_price,
+        this.sale_price,
         this.description,
         this.userId
       );
     }
   }
 
-  static fetchAllShopping(search, page, limit) {
-    if (!search) {
-      const allProductsSql = `
-        select * from products_for_sale($1, $2)
-      `;
-      return rows(allProductsSql, page, limit);
-    } else {
-      const allProductsSql = `
-        select * from searching_products_for_sale($1, $2, $3)
-      `;
-      return rows(allProductsSql, search, page, limit);
-    }
-  }
+  // static fetchAllShopping(search, page, limit) {
+  //   if (!search) {
+  //     const allProductsSql = `
+  //       select * from products_for_sale($1, $2)
+  //     `;
+  //     return rows(allProductsSql, page, limit);
+  //   } else {
+  //     const allProductsSql = `
+  //       select * from searching_products_for_sale($1, $2, $3)
+  //     `;
+  //     return rows(allProductsSql, search, page, limit);
+  //   }
+  // }
 
   static fetchAll(search, page, limit) {
     if (!search) {
@@ -86,14 +86,10 @@ module.exports = class Product {
   }
 
   static count(search) {
-    if (!search) {
-      return row(`select count(*) as product_count from products`);
-    } else {
-      return row(
-        `select * from search_products_count($1) as product_count`,
-        search
-      );
-    }
+    const productsCountSql = `
+      select products_count($1)
+    `;
+    return row(productsCountSql, search);
   }
 
   static findById(prodId, prodItemId) {
@@ -111,20 +107,9 @@ module.exports = class Product {
   }
 
   static deleteById(prodId, prodItemId) {
-    if (prodId) {
-      const deleteProductSql = `
-        delete from products
-        where
-          id = $1
-      `;
-      return row(deleteProductSql, prodId);
-    } else if (prodItemId) {
-      const deleteProductItemSql = `
-        delete from product_items
-        where
-          id = $1
-      `;
-      return row(deleteProductItemSql, prodItemId);
-    }
+    const deleteProductSql = `
+      select delete_product($1, $2)
+    `;
+    return row(deleteProductSql, prodId, prodItemId);
   }
 };

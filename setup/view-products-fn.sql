@@ -105,7 +105,7 @@ begin
     left join
       product_items as pi on pi.product_id = p.id
     where
-      p.name ilike '%' || _search || '%' or p.barcode ilike '%' || _search || '%'
+      (p.name ilike '%' || _search || '%' or p.barcode ilike '%' || _search || '%') and p.is_delete = false
     group by
       p.id,
       p.name,
@@ -153,6 +153,8 @@ begin
       products as p
     left join
       product_items as pi on pi.product_id = p.id
+    where
+      p.is_delete = false
     group by
       p.id,
       p.name,
@@ -168,17 +170,27 @@ end;
 $$;
 
 ------------------------------------------
---searching product count
-drop function search_products_count;
-create or replace function search_products_count(_search text) returns integer language plpgsql as $$
+--product count
+drop function products_count;
+create function products_count(_search text) returns integer language plpgsql as $$
 begin
-  return 
+  if _search is not null then
+    return
     (select
       count(*) as count
     from
       products
     where
-      name ilike '%' || _search || '%' or barcode ilike '%' || _search || '%');
+      (name ilike '%' || _search || '%' or barcode ilike '%' || _search || '%') and is_delete = false);
+  else
+    return
+      (select
+        count(*) as count
+      from
+        products
+      where
+        is_delete = false);
+  end if;
 end;
 $$;
 

@@ -1,6 +1,7 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/style/header.css">
     <link rel="stylesheet" href="/style/basket.css">
+    <link rel="stylesheet" href="/style/products-table.css">
   </head>
 
   <body>
@@ -15,41 +16,42 @@
           <%- include('../includes/search.ejs') %>
           
           <% if (products.length > 0) { %>
-              <table class="products_table">
-                <thead>
-                  <tr class="products__thead-tr">
-                    <th class="products__thead-th">Name</th>
-                    <th class="products__thead-th">Barcode</th>
-                    <th class="products__thead-th">Price</th>
-                    <th class="products__thead-th">Count</th>
-                    <th class="products__thead-th">Savatchaga qo'shish</th>
-                  </tr>
-                </thead>
-                <tbody class="classes">
-                  <% for (let product of products) { %>
-                    <tr class="products__tbody-tr<% if(product.count < 10){%> product-min-count<%}%>">
-                      <td class="products__tbody-td">
-                        <%= product.name %>
-                      </td>
-                      <td class="products__tbody-td">
-                        <%= product.barcode %>
-                      </td>
-                      <td class="products__tbody-td">
-                        <%= product.markup_price %> so'm
-                      </td>
-                      <td class="products__tbody-td">
-                        <%= product.count %>
-                      </td>
-                      <td class="products__tbody-td">
-                        <input name="name" class="category__create-input" type="number" placeholder="soni" min="1" value="1" required  autocomplete="off"/>
-                        <button type="submit" data-id="<%= product.id %>" class="category__create-btn" data-update="0">
-                          <b style="font-size: 20px; padding: -5px;">+</b>
-                        </button>
-                      </td>
-                    </tr>
-                    <% } %>
-                </tbody>
-              </table>
+
+            <div class="products__list">
+              <div class="products__list-header">
+                <div class="products__list-header-item p-item-first">Name</div>
+                <div class="products__list-header-item sale-p-item-second">Barcode</div>
+                <div class="products__list-header-item sale-p-item-fourth">Sale Price</div>
+                <div class="products__list-header-item p-item-fifth">Count</div>
+                <div class="products__list-header-item sale-p-item-seventh">Savatchaga qo'shish</div>
+              </div>
+              <div class="products__list-main">
+
+                <% for (let product of products) { %>
+                  <div class="products_list-columns">
+                    <div class="products_list-columns-item p-item-first"><%= product.name %></div>
+                    <div class="products_list-columns-item sale-p-item-second"><%= product.barcode %></div>
+                    <div class="products_list-columns-item sale-p-item-fourth"><%= product.sale_price.replace(/(?=(?:.{3})*$)/g, ' ') %></div>
+                    <div class="products_list-columns-item-therd">
+                      <% for (let i=0; i < product.original_price.length; i++ ) { %>
+                        <div class="products_list-columns-item-samll">
+                          <div class="products_list-columns-small p-item-fifth"><%= product.count[i] %></div>
+                          <div class="products_list-columns-item sale-p-item-seventh">
+                            <form action="/delete-product?page=<%= currentPage %> " method="POST" enctype="application/x-www-form-urlencoded">
+                              <input name="name" class="category__create-input product_count" type="number" placeholder="soni" min="1" max="10000" required  autocomplete="off"/>
+                              <button type="submit" data-id="<%= product.id %>" class="category__create-btn" data-update="0">
+                                <b style="font-size: 20px; padding: -5px;">+</b>
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      <% } %>
+                    </div>
+                  </div>
+                <% } %>
+
+              </div>
+            </div>
 
               <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, hasNextPage: hasNextPage, perviousPage: perviousPage, hasPerviousPage: hasPerviousPage, lastPage: lastPage}) %>
 

@@ -562,3 +562,8 @@ body {
 .basket-img {
   cursor: pointer;
 }
+
+.product_count {
+  max-width: 70px;
+  text-align: center;
+}

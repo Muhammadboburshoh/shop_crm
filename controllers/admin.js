@@ -9,7 +9,7 @@ exports.getProducts = async (req, res, next) => {
   search = search ? search.trim() : search;
 
   try {
-    const { product_count } = await Product.count(search);
+    const { products_count } = await Product.count(search);
     const products = await Product.fetchAll(search, page, ITEMS_PER_PAGE);
 
     res.render('admin/all-products', {
@@ -18,11 +18,11 @@ exports.getProducts = async (req, res, next) => {
       username: username,
       products: products,
       currentPage: page,
-      hasNextPage: ITEMS_PER_PAGE * page < product_count,
+      hasNextPage: ITEMS_PER_PAGE * page < products_count,
       hasPerviousPage: page > 1,
       nextPage: page + 1,
       perviousPage: page - 1,
-      lastPage: Math.ceil(product_count / ITEMS_PER_PAGE),
+      lastPage: Math.ceil(products_count / ITEMS_PER_PAGE),
       search: search
     });
   } catch (err) {
@@ -106,12 +106,10 @@ exports.getEditProduct = async (req, res, next) => {
 };
 
 exports.postEditProduct = async (req, res, next) => {
-  const username = req.cookies.__auth.user.login;
-  const { name, barcode, count, original_price, markup_price, prodId } =
-    req.body;
+  const { login: username, id: userId } = req.cookies.__auth.user;
+  const { name, barcode, count, original_price, sale_price, prodId } = req.body;
   const prodItemId = req.body.prodItemId ? req.body.prodItemId : 0;
   const description = req.body.description ? req.body.description : null;
-  const status = req.body.status ? 'A' : 'I';
 
   try {
     const product = new Product(
@@ -121,11 +119,10 @@ exports.postEditProduct = async (req, res, next) => {
       barcode,
       count,
       original_price,
-      markup_price,
+      sale_price,
       description,
-      status
+      userId
     );
-
     await product.save();
 
     res.render('201', {
@@ -141,14 +138,14 @@ exports.postEditProduct = async (req, res, next) => {
 };
 
 exports.postDeleteProduct = async (req, res, next) => {
-  const prodId = req.body.prodId ? req.body.prodId : null;
-  const prodItemId = req.body.prodItemId ? req.body.prodItemId : null;
-  const currentPage = req.body.currentPage;
+  const prodId = req.body.prodId ? req.body.prodId : 0;
+  const prodItemId = req.body.prodItemId ? req.body.prodItemId : 0;
+  const page = req.query.page;
 
   try {
     const result = await Product.deleteById(prodId, prodItemId);
 
-    res.redirect(`/products?page=${currentPage}`);
+    res.redirect(`/products?page=${page}`);
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;
