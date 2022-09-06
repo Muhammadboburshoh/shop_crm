@@ -40,7 +40,6 @@ exports.postOrderProduct = async (req, res, next) => {
   const { id: userId } = req.cookies.__auth.user;
   const { prodId, prodItemId, count } = req.body;
   const { search, page } = req.query;
-  console.log(prodId, prodItemId, count, page, search);
   const redirectUrl = search
     ? `/?page=${page}&search=${search}`
     : `/?page=${page}`;

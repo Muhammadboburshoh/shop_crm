@@ -75,5 +75,5 @@ create table order_items(
   CONSTRAINT fk_order_items_product_items_id
     FOREIGN KEY(pi_id) 
       REFERENCES product_items(id)
-      ON DELETE SET NULL,
+      ON DELETE SET NULL
 );

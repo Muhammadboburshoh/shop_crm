@@ -22,23 +22,23 @@
             <h3 class="parrent-hading">Yangi product qo'shing!</h3>
             <div class="input-wrapper">
               <label for="name">Product nomi: </label>
-              <input name="name" class="category__create-input" type="text" placeholder="name" required value="<% if (editing) { %><%= product.name %><% } %>" id="name"/>
+              <input name="name" class="category__create-input" type="text" placeholder="name" required value="<% if (editing) { %><%= product.name %><% } %>" id="name"/ autocomplete="off">
             </div>
             <div class="input-wrapper">
               <label for="barcode">Shrix code raqamlarini kiriting: </label>
-              <input name="barcode" class="category__create-input" type="number" placeholder="barcode" value="<% if (editing) { %><%= product.barcode %><% } %>" id="barcode"/>
+              <input name="barcode" class="category__create-input" type="number" placeholder="barcode" value="<% if (editing) { %><%= product.barcode %><% } %>" id="barcode"/ autocomplete="off">
             </div>
             <div class="input-wrapper">
               <label for="count">Product soni: </label>
-              <input name="count" class="category__create-input" type="number" placeholder="count" required value="<% if (editing) { %><%= product.count %><% } %>" id="count"/>
+              <input name="count" class="category__create-input" type="number" placeholder="count" required value="<% if (editing) { %><%= product.count %><% } %>" id="count" autocomplete="off"/>
             </div>
             <div class="input-wrapper">
               <label for="original_price">Sotib olingan narx: </label>
-              <input name="original_price" class="category__create-input" type="number" placeholder="orginal price" required value="<% if (editing) { %><%= product.original_price %><% } %>" id="original_price"/>
+              <input name="original_price" class="category__create-input" type="number" placeholder="orginal price" required value="<% if (editing) { %><%= product.original_price %><% } %>" id="original_price" autocomplete="off"/>
             </div>
             <div class="input-wrapper">
               <label for="sale_price">Sotuvdagi narxi: </label>
-              <input name="sale_price" class="category__create-input" type="number" placeholder="markup price" required value="<% if (editing) { %><%= product.sale_price %><% } %>" id="sale_price"/>
+              <input name="sale_price" class="category__create-input" type="number" placeholder="markup price" required value="<% if (editing) { %><%= product.sale_price %><% } %>" id="sale_price" autocomplete="off"/>
             </div>
             <div class="input-wrapper">
               <label for="description">Mahsulot haqida: </label>
