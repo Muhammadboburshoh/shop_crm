@@ -9,7 +9,7 @@ const productDeleteBtns = document.querySelectorAll('.product-item-delete');
 productDeleteBtns.forEach((btn, i) => {
   btn.addEventListener('click', event => {
     const isRealy = confirm(
-      `Productni yoki unga bog'langan tafsilotlarini o'chirishga ishonchingiz komilmi.\nAgar o'chirsangiz unga bog'langan barcha orderlar ham o'chib ketadi!`
+      `Productni yoki unga bog'langan tafsilotlarini o'chirishga ishonchingiz komilmi.`
     );
     if (isRealy) {
       return true;

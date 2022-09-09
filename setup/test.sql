@@ -112,3 +112,46 @@ group by
   p.id,
   p.name,
   p.description;
+
+
+
+
+select
+  p.id as id,
+  p.name as name,
+  p.barcode as barcode,
+  p.description as description,
+  p.sale_price as sale_price,
+  p.user_id as p_user_id,
+  p.created_at as p_created_at,
+  CASE
+    WHEN pi.is_delete = false then array_agg(pi.id)
+    else null
+  END as pi_id,
+  CASE
+    WHEN pi.is_delete = false then array_agg(pi.count)
+    else null
+  END as count,
+  CASE
+    WHEN pi.is_delete = false then array_agg(pi.original_price)
+    else null
+  END as original_price,
+  CASE
+    WHEN pi.is_delete = false then array_agg(pi.created_at)
+    else null
+  END as pi_created_at
+from
+  products as p
+left join
+  product_items as pi on pi.product_id = p.id
+where
+  p.is_delete = false
+group by
+  p.id,
+  p.name,
+  p.description,
+  p.barcode,
+  p.sale_price,
+  p.user_id,
+  p.created_at,
+  pi.is_delete
