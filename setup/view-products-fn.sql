@@ -1,3 +1,4 @@
+/*
 -- search for sale Products function
 drop function searching_products_for_sale;
 create or replace function searching_products_for_sale(_search text, _page int, _limit int) returns table(
@@ -34,7 +35,9 @@ begin
     offset (_page - 1) * _limit limit _limit;
 end;
 $$;
+*/
 
+/*
 -- all Products for sale function
 drop function products_for_sale;
 create or replace function products_for_sale(_page int, _limit int) returns table(
@@ -69,6 +72,7 @@ begin
     offset (_page - 1) * _limit limit _limit;
 end;
 $$;
+*/
 
 ---------------------------------------------------------
 -- Admin productlarni tahhrirlashi uchun olib berilgan productlar
@@ -145,34 +149,21 @@ begin
       p.sale_price as sale_price,
       p.user_id as p_user_id,
       p.created_at as p_created_at,
-      
-      CASE
-        WHEN bool_and(pi.is_delete) = false then array_agg(pi.id)
-        else '{null}'
-      END as pi_id,
-      CASE
-        WHEN bool_and(pi.is_delete) = false then array_agg(pi.count)
-        else '{null}'
-      END as count,
-      CASE
-        WHEN bool_and(pi.is_delete) = false then array_agg(pi.original_price)
-        else '{null}'
-      END as original_price,
-      CASE
-        WHEN bool_and(pi.is_delete) = false then array_agg(pi.created_at)
-        else '{null}'
-      END as pi_created_at
+      array_agg(pi.id) as pi_id,
+      array_agg(pi.count) as count,
+      array_agg(pi.original_price) as original_price,
+      array_agg(pi.created_at) as pi_created_at
     from
       products as p
     left join
       product_items as pi on pi.product_id = p.id
     where
-      p.is_delete = false
+      p.is_delete = false and pi.is_delete = false
     group by
       p.id,
       p.name,
-      p.description,
       p.barcode,
+      p.description,
       p.sale_price,
       p.user_id,
       p.created_at
